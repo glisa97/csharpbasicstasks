@@ -26,6 +26,13 @@ namespace ClassLibrary
             
             
         }
+        public bool checkMove(Field field) {
+            if (this.Field.RowNumber == field.RowNumber || this.Field.ColumnNumber == field.ColumnNumber)
+            {
+                return true;
+            }
+            else return false;
+        }
         
     }
 }

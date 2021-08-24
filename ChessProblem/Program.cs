@@ -10,17 +10,40 @@ namespace ChessProblem
         public static void Main(string[] args)
         {
             printBoard(myBoard);
-            Knight n = new Knight(Color.white, new Field(0, 0), 'N');
-            King k = new King(Color.white, new Field(2, 2), 'K');
-            Rook r = new Rook(Color.black, new Field(4, 6), 'R');
-            Queen q = new Queen(Color.white, new Field(5, 7), 'Q');
-            Bishop b = new Bishop(Color.black, new Field(0, 7), 'N');
+            Rook r = new Rook(Color.white, new Field(7, 0), 'r');
+            Knight n = new Knight(Color.white, new Field(7, 1), 'n');
+            Bishop b = new Bishop(Color.white, new Field(7, 2), 'b');
+            King k = new King(Color.white, new Field(7, 3), 'k');
+            Queen q = new Queen(Color.white, new Field(7, 4), 'q');
+            Bishop b1 = new Bishop(Color.white, new Field(7, 5), 'b');
+            Knight n1 = new Knight(Color.white, new Field(7, 6), 'n');
+            Rook r1 = new Rook(Color.white, new Field(7, 7), 'r');
 
-            myBoard.FiguresList.Add(n);
-            myBoard.FiguresList.Add(k);
+            Rook r2 = new Rook(Color.black, new Field(0, 0), 'R');
+            Knight n2 = new Knight(Color.black, new Field(0, 1), 'N');
+            Bishop b2 = new Bishop(Color.black, new Field(0, 2), 'B');
+            King k1 = new King(Color.black, new Field(6, 3), 'K');
+            Queen q1 = new Queen(Color.black, new Field(0, 4), 'Q');
+            Bishop b3 = new Bishop(Color.black, new Field(0, 5), 'B');
+            Knight n3 = new Knight(Color.black, new Field(0, 6), 'N');
+            Rook r3 = new Rook(Color.black, new Field(0, 7), 'R');
+
             myBoard.FiguresList.Add(r);
-            myBoard.FiguresList.Add(q);
+            myBoard.FiguresList.Add(n);
             myBoard.FiguresList.Add(b);
+            myBoard.FiguresList.Add(k);
+            myBoard.FiguresList.Add(q);
+            myBoard.FiguresList.Add(b1);
+            myBoard.FiguresList.Add(n1);
+            myBoard.FiguresList.Add(r1);
+            myBoard.FiguresList.Add(r2);
+            myBoard.FiguresList.Add(n2);
+            myBoard.FiguresList.Add(b2);
+            myBoard.FiguresList.Add(k1);
+            myBoard.FiguresList.Add(q1);
+            myBoard.FiguresList.Add(b3);
+            myBoard.FiguresList.Add(n3);
+            myBoard.FiguresList.Add(r3);
 
             foreach (IFigure f in myBoard.FiguresList) {
                 Field currentField = setCurrentField(f.Field);
@@ -30,8 +53,9 @@ namespace ChessProblem
 
             printBoard(myBoard);
             choseFigure();
-            printBoard(myBoard);
+           // printBoard(myBoard);
             Console.WriteLine();
+            
         }
         private static Field setCurrentField(Field f)
         {
@@ -39,24 +63,26 @@ namespace ChessProblem
         }
         private static void choseFigure() {
 
-            Console.WriteLine("Enter row of figure to move:");
-            int PositionRow = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter column of figure to move:");
-            int PositionColumn = int.Parse(Console.ReadLine());
-
             
-            foreach (IFigure f1 in myBoard.FiguresList) {
-             
-                if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn) {
-                    MarkMove(f1);
+            
+                Console.WriteLine("Enter row of figure to move:");
+                int PositionRow = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter column of figure to move:");
+                int PositionColumn = int.Parse(Console.ReadLine());
+
+                IFigure tempFig = null;
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+
+                    if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn)
+                    {
+                        tempFig = f1;
+                    }
+
                 }
-            }
-                   
-
-        }
+                MarkMove(tempFig);
             
-        
-    
+        }
         private static void MarkMove(IFigure f) {
 
             Console.WriteLine("Enter row for move:");
@@ -64,61 +90,153 @@ namespace ChessProblem
             Console.WriteLine("Enter column for move:");
             int newPositionColumn = int.Parse(Console.ReadLine());
             Field temp = new Field(newPositionRow, newPositionColumn);
+
              switch(f.Mark) {
                 case 'r' or 'R':
-                    if (f.Field.RowNumber == newPositionRow || f.Field.ColumnNumber == newPositionColumn) {
+                    IFigure elementToRemoveR = null;
+                    if (f.Field.RowNumber == newPositionRow || f.Field.ColumnNumber == newPositionColumn)
+                    {
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
                         
-                  
-                        f.Move(newPositionRow,newPositionColumn);
+                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+                        {
+                            foreach (IFigure f1 in myBoard.FiguresList)
+                            {
+                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+                                {
+                                    elementToRemoveR = f1;
+
+                                }
+
+                            }
+                            myBoard.FiguresList.Remove(elementToRemoveR);
+
+                        }
+                        f.Move(newPositionRow, newPositionColumn);
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+
                     }
+                    else Console.WriteLine("Ilegal move enter correct coordinates");
+
                 break;
 
                 case 'n' or 'N':
+                    
                     if (temp.CheckDistance(f.Field) == 3 && !temp.CheckRow(f.Field) && !temp.CheckColumn(f.Field)) {
+                        IFigure elementToRemoveN = null;
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+                        
+                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+                        {
+                            foreach (IFigure f1 in myBoard.FiguresList)
+                            {
+                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+                                {
+                                    elementToRemoveN = f1;
+
+                                }
+
+                            }
+                            myBoard.FiguresList.Remove(elementToRemoveN);
+
+                        }
                         f.Move(newPositionRow, newPositionColumn);
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                     }
-
-
+                    else Console.WriteLine("Ilegal move enter correct coordinates");
                     break;
                 case 'q' or 'Q':
                     if(temp.CheckDiagonal(f.Field) == true || temp.CheckRow(f.Field) == true || temp.CheckColumn(f.Field) == true)
                     {
-                        
+                        IFigure elementToRemoveQ = null;
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+                        
+                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+                        {
+                            foreach (IFigure f1 in myBoard.FiguresList)
+                            {
+                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+                                {
+                                    elementToRemoveQ = f1;
+
+                                }
+
+                            }
+                            
+                            myBoard.FiguresList.Remove(elementToRemoveQ);
+
+                        }
                         f.Move(newPositionRow, newPositionColumn);
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                     }
-                    
-                    break;
+                    else Console.WriteLine("Ilegal move enter correct coordinates");
 
+                    break;
                 case 'k' or 'K':
                     if (temp.CheckDiagonal(f.Field) == true || temp.CheckRow(f.Field) == true || temp.CheckColumn(f.Field) == true && temp.CheckDistance(f.Field) == 1)
                     {
-                        
+                        IFigure elementToRemoveK = null;
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+                        
+                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+                        {
+                            foreach (IFigure f1 in myBoard.FiguresList)
+                            {
+                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+                                {
+                                    elementToRemoveK = f1;
+
+                                }
+
+                            }
+                            myBoard.FiguresList.Remove(elementToRemoveK);
+                        }
                         f.Move(newPositionRow, newPositionColumn);
                         myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                     }
-
+                    else Console.WriteLine("Ilegal move enter correct coordinates");
                     break;
-
                 case 'b' or 'B':
                     
+                    if (temp.CheckDiagonal(f.Field) == true)
+                    {
+
+                        IFigure elementToRemoveB = null;
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+                        
+                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+                        {
+                            
+                            foreach (IFigure f1 in myBoard.FiguresList)
+                            {
+                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+                                {
+                                    elementToRemoveB = f1;
+                                    
+                                }
+                                
+                            }
+                            myBoard.FiguresList.Remove(elementToRemoveB);
+                            
+                        }
+                        f.Move(newPositionRow, newPositionColumn);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else Console.WriteLine("Ilegal move enter correct coordinates");
                     break;
-
-
             }
             
+            printBoard(myBoard);
+            choseFigure();
+
+
         }
         private static void printBoard(Board myBoard)
         {
             for (int i = 0; i < myBoard.Size; i++) {
                 for (int j = 0; j < myBoard.Size; j++) {
-
                     Field f = myBoard.TheGrid[i,j];
                     if (f.CurrentlyOccupied == true)
                     {
@@ -132,8 +250,7 @@ namespace ChessProblem
 
                             if (f.CheckDistance(a.Field) == 0) {
                                 Console.Write(a.Mark);
-                                break;
-                                
+                                break;   
                             }     
                         } 
                     }
@@ -148,6 +265,10 @@ namespace ChessProblem
                 Console.WriteLine();
             }
             Console.WriteLine("================");
+        }
+
+        private static void MovePiece(Board myBoard,IFigure figure, Field field) { 
+
         }
     }
 }
