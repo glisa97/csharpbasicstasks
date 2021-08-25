@@ -7,8 +7,10 @@ namespace ChessProblem
     public class Program
     {
         static Board myBoard = new Board(8);
+        private static bool IsWhiteTurn;
         public static void Main(string[] args)
         {
+            IsWhiteTurn = true;
             printBoard(myBoard);
             Rook r = new Rook(Color.white, new Field(7, 0), 'r');
             Knight n = new Knight(Color.white, new Field(7, 1), 'n');
@@ -63,171 +65,372 @@ namespace ChessProblem
         }
         private static void choseFigure() {
 
-            
-            
-                Console.WriteLine("Enter row of figure to move:");
-                int PositionRow = int.Parse(Console.ReadLine());
-                Console.WriteLine("Enter column of figure to move:");
-                int PositionColumn = int.Parse(Console.ReadLine());
 
-                IFigure tempFig = null;
-                foreach (IFigure f1 in myBoard.FiguresList)
+            string message = IsWhiteTurn ? "WHITE Source field row:" :
+                                           "BLACK Source field row:";
+            Console.WriteLine(message);
+            int PositionRow = int.Parse(Console.ReadLine());
+            message = IsWhiteTurn ? "WHITE Source field column:" :
+                                            "BLACK Source field column:";
+
+            Console.WriteLine(message);
+            int PositionColumn = int.Parse(Console.ReadLine());
+
+            IFigure tempFig = null;
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+
+                if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn)
                 {
-
-                    if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn)
-                    {
-                        tempFig = f1;
-                    }
-
+                    tempFig = f1;
                 }
-                MarkMove(tempFig);
+
+            }
+            MoveFigure(tempFig);
             
         }
-        private static void MarkMove(IFigure f) {
 
-            Console.WriteLine("Enter row for move:");
-            int newPositionRow = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter column for move:");
-            int newPositionColumn = int.Parse(Console.ReadLine());
-            Field temp = new Field(newPositionRow, newPositionColumn);
-
-             switch(f.Mark) {
-                case 'r' or 'R':
-                    IFigure elementToRemoveR = null;
-                    if (f.Field.RowNumber == newPositionRow || f.Field.ColumnNumber == newPositionColumn)
-                    {
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
-
-                        
-                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
-                        {
-                            foreach (IFigure f1 in myBoard.FiguresList)
-                            {
-                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
-                                {
-                                    elementToRemoveR = f1;
-
-                                }
-
-                            }
-                            myBoard.FiguresList.Remove(elementToRemoveR);
-
-                        }
-                        f.Move(newPositionRow, newPositionColumn);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-
-                    }
-                    else Console.WriteLine("Ilegal move enter correct coordinates");
-
-                break;
-
-                case 'n' or 'N':
-                    
-                    if (temp.CheckDistance(f.Field) == 3 && !temp.CheckRow(f.Field) && !temp.CheckColumn(f.Field)) {
-                        IFigure elementToRemoveN = null;
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
-                        
-                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
-                        {
-                            foreach (IFigure f1 in myBoard.FiguresList)
-                            {
-                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
-                                {
-                                    elementToRemoveN = f1;
-
-                                }
-
-                            }
-                            myBoard.FiguresList.Remove(elementToRemoveN);
-
-                        }
-                        f.Move(newPositionRow, newPositionColumn);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    }
-                    else Console.WriteLine("Ilegal move enter correct coordinates");
-                    break;
-                case 'q' or 'Q':
-                    if(temp.CheckDiagonal(f.Field) == true || temp.CheckRow(f.Field) == true || temp.CheckColumn(f.Field) == true)
-                    {
-                        IFigure elementToRemoveQ = null;
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
-                        
-                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
-                        {
-                            foreach (IFigure f1 in myBoard.FiguresList)
-                            {
-                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
-                                {
-                                    elementToRemoveQ = f1;
-
-                                }
-
-                            }
-                            
-                            myBoard.FiguresList.Remove(elementToRemoveQ);
-
-                        }
-                        f.Move(newPositionRow, newPositionColumn);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    }
-                    else Console.WriteLine("Ilegal move enter correct coordinates");
-
-                    break;
-                case 'k' or 'K':
-                    if (temp.CheckDiagonal(f.Field) == true || temp.CheckRow(f.Field) == true || temp.CheckColumn(f.Field) == true && temp.CheckDistance(f.Field) == 1)
-                    {
-                        IFigure elementToRemoveK = null;
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
-                        
-                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
-                        {
-                            foreach (IFigure f1 in myBoard.FiguresList)
-                            {
-                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
-                                {
-                                    elementToRemoveK = f1;
-
-                                }
-
-                            }
-                            myBoard.FiguresList.Remove(elementToRemoveK);
-                        }
-                        f.Move(newPositionRow, newPositionColumn);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    }
-                    else Console.WriteLine("Ilegal move enter correct coordinates");
-                    break;
-                case 'b' or 'B':
-                    
-                    if (temp.CheckDiagonal(f.Field) == true)
-                    {
-
-                        IFigure elementToRemoveB = null;
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
-                        
-                        if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
-                        {
-                            
-                            foreach (IFigure f1 in myBoard.FiguresList)
-                            {
-                                if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
-                                {
-                                    elementToRemoveB = f1;
-                                    
-                                }
-                                
-                            }
-                            myBoard.FiguresList.Remove(elementToRemoveB);
-                            
-                        }
-                        f.Move(newPositionRow, newPositionColumn);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                        
-                    }
-                    else Console.WriteLine("Ilegal move enter correct coordinates");
-                    break;
+        private static void ChangeMoveTurn() 
+        {
+            if (IsWhiteTurn == true)
+            {
+                IsWhiteTurn = false;
             }
-            
+            else
+            {
+                IsWhiteTurn = true;
+            }
+        }
+
+        private static void MoveRook(IFigure f, Field destinationField) 
+        {
+            IFigure elementToRemoveR = null;
+            if (f.Field.RowNumber == destinationField.RowNumber || f.Field.ColumnNumber == destinationField.ColumnNumber)
+            {
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+
+                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                {
+                    foreach (IFigure f1 in myBoard.FiguresList)
+                    {
+                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                        {
+                            elementToRemoveR = f1;
+
+                        }
+
+                    }
+                    myBoard.FiguresList.Remove(elementToRemoveR);
+
+                }
+                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                ChangeMoveTurn();
+            }
+            else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static void MoveKnight(IFigure f, Field destinationField) 
+        {
+            if (destinationField.CheckDistance(f.Field) == 3 && !destinationField.CheckRow(f.Field) && !destinationField.CheckColumn(f.Field))
+            {
+                IFigure elementToRemoveN = null;
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                {
+                    foreach (IFigure f1 in myBoard.FiguresList)
+                    {
+                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                        {
+                            elementToRemoveN = f1;
+
+                        }
+
+                    }
+                    myBoard.FiguresList.Remove(elementToRemoveN);
+
+                }
+                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                ChangeMoveTurn();
+            }
+            else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static void MoveQueen(IFigure f, Field destinationField) 
+        {
+            if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true)
+            {
+                IFigure elementToRemoveQ = null;
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                {
+                    foreach (IFigure f1 in myBoard.FiguresList)
+                    {
+                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                        {
+                            elementToRemoveQ = f1;
+
+                        }
+
+                    }
+
+                    myBoard.FiguresList.Remove(elementToRemoveQ);
+
+                }
+                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                ChangeMoveTurn();
+            }
+            else Console.WriteLine("Ilegal move enter correct coordinates");
+
+        }
+
+        private static void MoveKing(IFigure f, Field destinationField)
+        {
+            if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true && destinationField.CheckDistance(f.Field) == 1)
+            {
+                IFigure elementToRemoveK = null;
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                {
+                    foreach (IFigure f1 in myBoard.FiguresList)
+                    {
+                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                        {
+                            elementToRemoveK = f1;
+
+                        }
+
+                    }
+                    myBoard.FiguresList.Remove(elementToRemoveK);
+                }
+                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+            }
+            else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static void MoveBishop(IFigure f, Field destinationField)
+        {
+            if (destinationField.CheckDiagonal(f.Field) == true)
+            {
+
+                IFigure elementToRemoveB = null;
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                {
+
+                    foreach (IFigure f1 in myBoard.FiguresList)
+                    {
+                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                        {
+                            elementToRemoveB = f1;
+
+                        }
+
+                    }
+                    myBoard.FiguresList.Remove(elementToRemoveB);
+
+                }
+                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+
+            }
+            else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static void MoveFigure(IFigure f) 
+        {
+            string message = IsWhiteTurn ? "WHITE Destination field row:" :
+                                           "BLACK Destination field row:";
+            Console.WriteLine(message);
+            int newPositionRow = int.Parse(Console.ReadLine());
+            message = IsWhiteTurn ? "WHITE Destination field column:" :
+                                    "BLACK Destination field column:";
+            Console.WriteLine(message);
+            int newPositionColumn = int.Parse(Console.ReadLine());
+            Field destinationField = new Field(newPositionRow, newPositionColumn);
+
+            switch (f.Name)
+            {
+                case "WHITELEFTROOK":
+                case "WHITERIGHTROOK":
+                case "BLACKRIGHTROOK":
+                case "BLACKLEFTROOK":
+                    MoveRook(f, destinationField);
+                    break;
+                case "WHITELEFTKNIGHT":
+                case "WHITERIGHTKNIGHT":
+                case "BLACKRIGHTKNIGHT":
+                case "BLACKLEFTKNIGHT":
+                    MoveKnight(f, destinationField);
+                    break;
+                case "WHITELEFTQUEEN":
+                case "WHITERIGHTQUEEN":
+                case "BLACKRIGHTQUEEN":
+                case "BLACKLEFTQUEEN":
+                    MoveQueen(f, destinationField);
+                    break;
+                case "WHITELEFTKING":
+                case "WHITERIGHTKING":
+                case "BLACKRIGHTKING":
+                case "BLACKLEFTKING":
+                    MoveKing(f, destinationField);
+                    break;
+                case "WHITELEFTBISHOP":
+                case "WHITERIGHTBISHOP":
+                case "BLACKRIGHTBISHOP":
+                case "BLACKLEFTBISHOP":
+                    MoveKing(f, destinationField);
+                    break;
+
+            }
+
+            //switch (f.Mark)
+            //{
+            //    case 'r' or 'R':
+            //        IFigure elementToRemoveR = null;
+            //        if (f.Field.RowNumber == newPositionRow || f.Field.ColumnNumber == newPositionColumn)
+            //        {
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+
+            //            if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+            //            {
+            //                foreach (IFigure f1 in myBoard.FiguresList)
+            //                {
+            //                    if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+            //                    {
+            //                        elementToRemoveR = f1;
+
+            //                    }
+
+            //                }
+            //                myBoard.FiguresList.Remove(elementToRemoveR);
+
+            //            }
+            //            f.Move(newPositionRow, newPositionColumn);
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+
+            //        }
+            //        else Console.WriteLine("Ilegal move enter correct coordinates");
+
+            //        break;
+
+            //    case 'n' or 'N':
+
+            //        if (destinationField.CheckDistance(f.Field) == 3 && !destinationField.CheckRow(f.Field) && !destinationField.CheckColumn(f.Field))
+            //        {
+            //            IFigure elementToRemoveN = null;
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+            //            if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+            //            {
+            //                foreach (IFigure f1 in myBoard.FiguresList)
+            //                {
+            //                    if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+            //                    {
+            //                        elementToRemoveN = f1;
+
+            //                    }
+
+            //                }
+            //                myBoard.FiguresList.Remove(elementToRemoveN);
+
+            //            }
+            //            f.Move(newPositionRow, newPositionColumn);
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+            //        }
+            //        else Console.WriteLine("Ilegal move enter correct coordinates");
+            //        break;
+            //    case 'q' or 'Q':
+            //        if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true)
+            //        {
+            //            IFigure elementToRemoveQ = null;
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+            //            if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+            //            {
+            //                foreach (IFigure f1 in myBoard.FiguresList)
+            //                {
+            //                    if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+            //                    {
+            //                        elementToRemoveQ = f1;
+
+            //                    }
+
+            //                }
+
+            //                myBoard.FiguresList.Remove(elementToRemoveQ);
+
+            //            }
+            //            f.Move(newPositionRow, newPositionColumn);
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+            //        }
+            //        else Console.WriteLine("Ilegal move enter correct coordinates");
+
+            //        break;
+            //    case 'k' or 'K':
+            //        if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true && destinationField.CheckDistance(f.Field) == 1)
+            //        {
+            //            IFigure elementToRemoveK = null;
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+            //            if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+            //            {
+            //                foreach (IFigure f1 in myBoard.FiguresList)
+            //                {
+            //                    if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+            //                    {
+            //                        elementToRemoveK = f1;
+
+            //                    }
+
+            //                }
+            //                myBoard.FiguresList.Remove(elementToRemoveK);
+            //            }
+            //            f.Move(newPositionRow, newPositionColumn);
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+            //        }
+            //        else Console.WriteLine("Ilegal move enter correct coordinates");
+            //        break;
+            //    case 'b' or 'B':
+
+            //        if (destinationField.CheckDiagonal(f.Field) == true)
+            //        {
+
+            //            IFigure elementToRemoveB = null;
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+
+            //            if (myBoard.TheGrid[newPositionRow, newPositionColumn].CurrentlyOccupied == true)
+            //            {
+
+            //                foreach (IFigure f1 in myBoard.FiguresList)
+            //                {
+            //                    if (f1.Field.RowNumber == newPositionRow && f1.Field.ColumnNumber == newPositionColumn)
+            //                    {
+            //                        elementToRemoveB = f1;
+
+            //                    }
+
+            //                }
+            //                myBoard.FiguresList.Remove(elementToRemoveB);
+
+            //            }
+            //            f.Move(newPositionRow, newPositionColumn);
+            //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+
+            //        }
+            //        else Console.WriteLine("Ilegal move enter correct coordinates");
+            //        break;
+            //}
+
             printBoard(myBoard);
             choseFigure();
 

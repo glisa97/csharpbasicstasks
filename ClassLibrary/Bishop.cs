@@ -8,15 +8,24 @@ namespace ClassLibrary
 {
     public class Bishop :IFigure
     {
+        public string Name { get; set; }
         public Color Color { get; set; }
         public Field Field { get; set; }
         public char Mark { get; set; }
 
-        public Bishop(Color color, Field field, char mark)
+        public Bishop(Color color, Field field, FigureSide figureSide, FigureNames figureNames)
         {
             Color = color;
             Field = field;
-            Mark = mark;
+            if (color == Color.WHITE)
+            {
+                Mark = 'b';
+            }
+            else 
+            {
+                Mark = 'B';
+            }
+            Name = $"{Color}{figureSide}{figureNames}";
         }
 
         public void Move(int row, int column) {

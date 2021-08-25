@@ -8,15 +8,16 @@ namespace ClassLibrary
 {
     public class Rook : IFigure
     {
+        public string Name { get; set; }
         public Color Color { get; set; }
         public Field Field { get; set; }
         public char Mark { get; set; }
 
-        public Rook(Color color, Field field, char mark)
+        public Rook(Color color, Field field)
         {
             Color = color;
             Field = field;
-            Mark = mark;
+            //Mark = mark;
         }
 
         public void Move(int row,int column) {

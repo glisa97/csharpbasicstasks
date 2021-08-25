@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public enum Color
+    public enum FigureSide
     {
-        WHITE,
-        BLACK
-            
+        NONE,
+        LEFT,
+        RIGHT
     }
 }

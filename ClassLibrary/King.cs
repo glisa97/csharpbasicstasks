@@ -8,15 +8,16 @@ namespace ClassLibrary
 {
     public class King : IFigure
     {
+        public string Name { get; set; }
         public Color Color { get; set; }
         public Field Field { get; set ; }
         public char Mark { get; set; }
 
-        public King(Color color, Field field, char mark)
+        public King(Color color, Field field)
         {
             Color = color;
             Field = field;
-            Mark = mark;
+            //Mark = mark;
         }
 
         public void Move(int row, int column) {

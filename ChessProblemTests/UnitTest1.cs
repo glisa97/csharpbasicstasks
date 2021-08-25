@@ -1,3 +1,4 @@
+using ClassLibrary;
 using NUnit.Framework;
 
 namespace ChessProblemTests
@@ -12,7 +13,7 @@ namespace ChessProblemTests
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            Bishop bishop = new Bishop(Color.WHITE, new Field(3,3), FigureSide.LEFT, FigureNames.BISHOP);
         }
     }
 }

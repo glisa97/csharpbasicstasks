@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public enum Color
+    public enum  FigureNames
     {
-        WHITE,
-        BLACK
-            
+        ROOK,
+        KNIGHT,
+        BISHOP,
+        QUEEN,
+        KING
     }
 }
