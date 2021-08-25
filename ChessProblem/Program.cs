@@ -211,6 +211,7 @@ namespace ChessProblem
                 }
                 f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                ChangeMoveTurn();
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
@@ -240,7 +241,7 @@ namespace ChessProblem
                 }
                 f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-
+                ChangeMoveTurn();
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
