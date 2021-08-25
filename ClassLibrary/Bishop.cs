@@ -24,5 +24,11 @@ namespace ClassLibrary
             this.Field.RowNumber = row;
             this.Field.ColumnNumber = column;
         }
+
+        public bool CheckDiagonal(Field a)
+        {
+            if (this.Field.CheckDiagonal(a.Field) == true) { 
+            }
+        }
     }
 }

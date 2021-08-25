@@ -28,6 +28,51 @@ namespace ChessProblem
             Knight n3 = new Knight(Color.black, new Field(0, 6), 'N');
             Rook r3 = new Rook(Color.black, new Field(0, 7), 'R');
 
+/*
+            //Passing by reference
+            Rook r4 = new Rook(Color.black, new Field(3, 7), 'R');
+            Console.WriteLine(r4);
+
+            Rook rookRef;
+            rookRef = r4;
+
+            Console.WriteLine(rookRef);
+
+            rookRef.Mark = 'g';
+            Console.WriteLine(rookRef);
+            Console.WriteLine(r4);
+
+
+
+            //Passing by values
+            int a = 2;
+            int c = 3;
+            Console.WriteLine("Int a is: " + a);
+            Console.WriteLine("Int b is: " + c);
+
+            a = c;
+
+            Console.WriteLine("Int a is: " + a);
+            Console.WriteLine("Int b is: " + c);
+
+            a += 4;
+
+            Console.WriteLine("Int a is: " + a);
+            Console.WriteLine("Int b is: " + c);
+
+
+
+            //Ne znam sta je ovo koj k
+            string s = "Hello";
+            string test = s;
+
+            s = s.Remove(0);
+
+            Console.WriteLine(" String test is : " + test);
+            Console.WriteLine("String s is: " + s);
+*/
+
+
             myBoard.FiguresList.Add(r);
             myBoard.FiguresList.Add(n);
             myBoard.FiguresList.Add(b);
@@ -44,6 +89,7 @@ namespace ChessProblem
             myBoard.FiguresList.Add(b3);
             myBoard.FiguresList.Add(n3);
             myBoard.FiguresList.Add(r3);
+
 
             foreach (IFigure f in myBoard.FiguresList) {
                 Field currentField = setCurrentField(f.Field);

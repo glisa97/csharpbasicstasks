@@ -33,6 +33,10 @@ namespace ClassLibrary
             }
             else return false;
         }
-        
+
+        public override string ToString()
+        {
+            return "Mark is: " + Mark + " Color is: " + " Field is: " + Field.RowNumber + Field.ColumnNumber;
+        }
     }
 }
