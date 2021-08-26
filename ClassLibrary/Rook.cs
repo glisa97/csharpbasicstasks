@@ -13,15 +13,24 @@ namespace ClassLibrary
         public Field Field { get; set; }
         public char Mark { get; set; }
 
-        public Rook(Color color, Field field)
+        public Rook(Color color, Field field, FigureSide figureSide, FigureNames figureNames)
         {
             Color = color;
             Field = field;
             //Mark = mark;
+            if (color == Color.WHITE)
+            {
+                Mark = 'r';
+            }
+            else
+            {
+                Mark = 'R';
+            }
+            Name = $"{color}{figureSide}{figureNames}";
         }
 
         public void Move(int row,int column) {
-            Console.WriteLine("Im rook");
+            
             this.Field.RowNumber = row;
             this.Field.ColumnNumber = column;
             

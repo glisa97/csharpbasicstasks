@@ -29,9 +29,10 @@ namespace ClassLibrary
         }
 
         public void Move(int row, int column) {
-            Console.WriteLine("Im bishop");
+            
             this.Field.RowNumber = row;
             this.Field.ColumnNumber = column;
         }
     }
+        
 }

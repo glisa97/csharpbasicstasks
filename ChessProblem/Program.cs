@@ -11,24 +11,24 @@ namespace ChessProblem
         public static void Main(string[] args)
         {
             IsWhiteTurn = true;
-            printBoard(myBoard);
-            Rook r = new Rook(Color.white, new Field(7, 0), 'r');
-            Knight n = new Knight(Color.white, new Field(7, 1), 'n');
-            Bishop b = new Bishop(Color.white, new Field(7, 2), 'b');
-            King k = new King(Color.white, new Field(7, 3), 'k');
-            Queen q = new Queen(Color.white, new Field(7, 4), 'q');
-            Bishop b1 = new Bishop(Color.white, new Field(7, 5), 'b');
-            Knight n1 = new Knight(Color.white, new Field(7, 6), 'n');
-            Rook r1 = new Rook(Color.white, new Field(7, 7), 'r');
+           
+            Rook r = new Rook(Color.WHITE, new Field(0, 7), FigureSide.LEFT, FigureNames.ROOK);
+            Knight n = new Knight(Color.WHITE, new Field(0, 6), FigureSide.LEFT, FigureNames.KNIGHT);
+            Bishop b = new Bishop(Color.WHITE, new Field(0, 5), FigureSide.LEFT, FigureNames.BISHOP);
+            Queen q = new Queen(Color.WHITE, new Field(0, 3), FigureSide.NONE, FigureNames.QUEEN);
+            King k = new King(Color.WHITE, new Field(0, 4), FigureSide.NONE, FigureNames.KING);
+            Bishop b1 = new Bishop(Color.WHITE, new Field(0, 2), FigureSide.RIGHT,FigureNames.BISHOP);
+            Knight n1 = new Knight(Color.WHITE, new Field(0, 1), FigureSide.RIGHT, FigureNames.KNIGHT);
+            Rook r1 = new Rook(Color.WHITE, new Field(0, 0), FigureSide.RIGHT, FigureNames.ROOK);
 
-            Rook r2 = new Rook(Color.black, new Field(0, 0), 'R');
-            Knight n2 = new Knight(Color.black, new Field(0, 1), 'N');
-            Bishop b2 = new Bishop(Color.black, new Field(0, 2), 'B');
-            King k1 = new King(Color.black, new Field(6, 3), 'K');
-            Queen q1 = new Queen(Color.black, new Field(0, 4), 'Q');
-            Bishop b3 = new Bishop(Color.black, new Field(0, 5), 'B');
-            Knight n3 = new Knight(Color.black, new Field(0, 6), 'N');
-            Rook r3 = new Rook(Color.black, new Field(0, 7), 'R');
+            Rook r2 = new Rook(Color.BLACK, new Field(7, 0), FigureSide.LEFT, FigureNames.ROOK);
+            Knight n2 = new Knight(Color.BLACK, new Field(7, 1), FigureSide.LEFT, FigureNames.KNIGHT);
+            Bishop b2 = new Bishop(Color.BLACK, new Field(7, 2), FigureSide.LEFT, FigureNames.BISHOP);
+            Queen q1 = new Queen(Color.BLACK, new Field(7, 3), FigureSide.NONE, FigureNames.QUEEN);
+            King k1 = new King(Color.BLACK, new Field(7, 4), FigureSide.NONE, FigureNames.KING);
+            Bishop b3 = new Bishop(Color.BLACK, new Field(7, 5), FigureSide.RIGHT, FigureNames.BISHOP);
+            Knight n3 = new Knight(Color.BLACK, new Field(7, 6), FigureSide.RIGHT, FigureNames.KNIGHT);
+            Rook r3 = new Rook(Color.BLACK, new Field(7, 7), FigureSide.RIGHT, FigureNames.ROOK);
 
             myBoard.FiguresList.Add(r);
             myBoard.FiguresList.Add(n);
@@ -53,9 +53,13 @@ namespace ChessProblem
             }
             
 
-            printBoard(myBoard);
-            choseFigure();
-           // printBoard(myBoard);
+            
+            while (true)
+            {
+                
+                printBoard(myBoard);
+                choseFigure();
+            }
             Console.WriteLine();
             
         }
@@ -64,14 +68,16 @@ namespace ChessProblem
             return myBoard.TheGrid[f.RowNumber, f.ColumnNumber];
         }
         private static void choseFigure() {
+            
+            
+            
 
-
-            string message = IsWhiteTurn ? "WHITE Source field row:" :
-                                           "BLACK Source field row:";
+            string message = IsWhiteTurn ? "WHITE figure field row:" :
+                                           "BLACK figure field row:";
             Console.WriteLine(message);
             int PositionRow = int.Parse(Console.ReadLine());
-            message = IsWhiteTurn ? "WHITE Source field column:" :
-                                            "BLACK Source field column:";
+            message = IsWhiteTurn ? "WHITE figure field column:" :
+                                            "BLACK figure field column:";
 
             Console.WriteLine(message);
             int PositionColumn = int.Parse(Console.ReadLine());
@@ -82,11 +88,26 @@ namespace ChessProblem
 
                 if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn)
                 {
+                    if (IsWhiteTurn == true && f1.Color != Color.WHITE) {
+                        Console.WriteLine("You need to play with white color");
+                        return;
+                    } else if (IsWhiteTurn == false && f1.Color == Color.WHITE) {
+                        Console.WriteLine("You need to play with black color");
+                        return;
+                    }
                     tempFig = f1;
                 }
 
             }
-            MoveFigure(tempFig);
+            if (tempFig != null) {
+                MoveFigure(tempFig);
+            }
+            else
+            {
+                Console.WriteLine("Figure not found on board");
+                return;
+            }
+            
             
         }
 
@@ -100,13 +121,25 @@ namespace ChessProblem
             {
                 IsWhiteTurn = true;
             }
+            
         }
 
-        private static void MoveRook(IFigure f, Field destinationField) 
-        {
+        private static void MoveRook(IFigure f, Field destinationField)
+        {//f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field)
             IFigure elementToRemoveR = null;
-            if (f.Field.RowNumber == destinationField.RowNumber || f.Field.ColumnNumber == destinationField.ColumnNumber)
+            string eatenFigure;
+
+            if (RookMoveCheck(f, destinationField))
             {
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+                    if ( RookMoveCheck(f, f1.Field) && CheckFigureInWay(f, f1, destinationField) )
+                    {
+                        Console.WriteLine("Figure is on the way");
+                        return;
+                    }
+
+                }
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
 
@@ -121,20 +154,66 @@ namespace ChessProblem
                         }
 
                     }
-                    myBoard.FiguresList.Remove(elementToRemoveR);
+                    if (f.Color == elementToRemoveR.Color)
+                    {
+                        Console.WriteLine("Figure can't eat same color figure");
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else
+                    {
+                        myBoard.FiguresList.Remove(elementToRemoveR);
+                        eatenFigure = elementToRemoveR.Name;
+                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+                        Console.WriteLine("by:" + $"{ f.Name}");
 
+                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        ChangeMoveTurn();
+                        
+                    }
                 }
-                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                ChangeMoveTurn();
+                else
+                {
+                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                    ChangeMoveTurn();
+                    
+                }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static bool CheckFigureInWay(IFigure FigureToMove, IFigure FigureInWay, Field destinationField)
+        {
+            if (FigureToMove.Field.CheckDistance(FigureInWay.Field) < FigureToMove.Field.CheckDistance(destinationField) &&
+                destinationField.CheckDistance(FigureInWay.Field) < destinationField.CheckDistance(FigureToMove.Field))
+            {
+
+                return true;
+            }
+            return false;
+        }
+
+        private static bool RookMoveCheck(IFigure f, Field field)
+        {
+            return f.Field.RowNumber == field.RowNumber || f.Field.ColumnNumber == field.ColumnNumber;
         }
 
         private static void MoveKnight(IFigure f, Field destinationField) 
         {
             if (destinationField.CheckDistance(f.Field) == 3 && !destinationField.CheckRow(f.Field) && !destinationField.CheckColumn(f.Field))
             {
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+                    if (f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field))
+                    {
+                        Console.WriteLine("Figure is on the way");
+
+                    }
+
+                }
+                string eatenFigure;
                 IFigure elementToRemoveN = null;
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
@@ -149,20 +228,57 @@ namespace ChessProblem
                         }
 
                     }
-                    myBoard.FiguresList.Remove(elementToRemoveN);
+                    if (f.Color == elementToRemoveN.Color)
+                    {
+                        Console.WriteLine("Figure can't eat same color figure");
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else
+                    {
+                        myBoard.FiguresList.Remove(elementToRemoveN);
+                        eatenFigure = elementToRemoveN.Name;
+                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+                        Console.WriteLine("by:" + $"{ f.Name}");
 
+                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        ChangeMoveTurn();
+                        
+                    }
                 }
-                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                ChangeMoveTurn();
+                else
+                {
+                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                    ChangeMoveTurn();
+                    
+                }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
 
         private static void MoveQueen(IFigure f, Field destinationField) 
         {
-            if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true)
+            if (MoveQueenCheckDiagonal(f,destinationField) || MoveQueenCheckRow(f,destinationField) || MoveQueenCheckColumn(f,destinationField))
             {
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+                    if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckDiagonal(f, destinationField) && MoveQueenCheckDiagonal(f, f1.Field))
+                    {
+                        Console.WriteLine("Figure is on the way");
+                        return;
+
+                    } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckRow(f, destinationField) && MoveQueenCheckRow(f, f1.Field)) {
+                        Console.WriteLine("Figure is on the way");
+                        return;
+                    } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckColumn(f, destinationField) && MoveQueenCheckColumn(f, f1.Field)) {
+                        Console.WriteLine("Figure is on the way");
+                        return;
+                    }
+
+                }
+                string eatenFigure;
                 IFigure elementToRemoveQ = null;
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
@@ -177,15 +293,61 @@ namespace ChessProblem
                         }
 
                     }
+                    if (f.Color == elementToRemoveQ.Color)
+                    {
+                        Console.WriteLine("Figure can't eat same color figure");
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else
+                    {
+                        myBoard.FiguresList.Remove(elementToRemoveQ);
+                        eatenFigure = elementToRemoveQ.Name;
+                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+                        Console.WriteLine("by:" + $"{ f.Name}");
 
-                    myBoard.FiguresList.Remove(elementToRemoveQ);
-
+                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        ChangeMoveTurn();
+                        
+                    }
                 }
-                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                ChangeMoveTurn();
+                else
+                {
+                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                    ChangeMoveTurn();
+                    
+                }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
+
+        }
+
+        private static bool checkQueenWay(IFigure FigureToMove, IFigure FigureInWay, Field destinationField)
+        {
+            if (FigureToMove.Field.CheckDistance(FigureInWay.Field) < FigureToMove.Field.CheckDistance(destinationField) &&
+                destinationField.CheckDistance(FigureInWay.Field) < destinationField.CheckDistance(FigureToMove.Field))
+            {
+
+                return true;
+            }
+            return false;
+        }
+
+        private static bool MoveQueenCheckDiagonal(IFigure figure, Field destinationField)
+        {
+            return destinationField.CheckDiagonal(figure.Field) == true;
+
+        }
+        private static bool MoveQueenCheckRow(IFigure figure, Field destinationField)
+        {
+            return destinationField.CheckRow(figure.Field) == true;
+
+        }
+        private static bool MoveQueenCheckColumn(IFigure figure, Field destinationField)
+        {
+            return destinationField.CheckColumn(figure.Field) == true;
 
         }
 
@@ -193,6 +355,16 @@ namespace ChessProblem
         {
             if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true && destinationField.CheckDistance(f.Field) == 1)
             {
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+                    if (f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field))
+                    {
+                        Console.WriteLine("Figure on the way");
+
+                    }
+
+                }
+                string eatenFigure;
                 IFigure elementToRemoveK = null;
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
@@ -207,43 +379,109 @@ namespace ChessProblem
                         }
 
                     }
-                    myBoard.FiguresList.Remove(elementToRemoveK);
+                    if (f.Color == elementToRemoveK.Color)
+                    {
+                        Console.WriteLine("Figure can't eat same color figure");
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else
+                    {
+                        myBoard.FiguresList.Remove(elementToRemoveK);
+                        eatenFigure = elementToRemoveK
+                            .Name;
+                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+                        Console.WriteLine("by:" + $"{ f.Name}");
+
+                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        ChangeMoveTurn();
+                        
+                    }
                 }
-                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                ChangeMoveTurn();
+                else
+                {
+                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                    ChangeMoveTurn();
+                    
+                }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
+
+            
         }
 
         private static void MoveBishop(IFigure f, Field destinationField)
         {
-            if (destinationField.CheckDiagonal(f.Field) == true)
+ 
+            if (BishopMoveCheck(f,destinationField))
             {
+                foreach (IFigure f1 in myBoard.FiguresList)
+                {
+                    if (BishopMoveCheck(f, f1.Field) && BishopCheckDistance(f,destinationField,f1))
+                    {
+                        Console.WriteLine("Figure is on the way");
+                        return;
+                    }
 
+                }
+                string eatenFigure;
                 IFigure elementToRemoveB = null;
                 myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
                 if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
                 {
-
                     foreach (IFigure f1 in myBoard.FiguresList)
                     {
                         if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
                         {
                             elementToRemoveB = f1;
-
                         }
-
                     }
-                    myBoard.FiguresList.Remove(elementToRemoveB);
+                    if (f.Color == elementToRemoveB.Color)
+                    {
+                        Console.WriteLine("Figure can't eat same color figure");
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        
+                    }
+                    else
+                    {
+                        myBoard.FiguresList.Remove(elementToRemoveB);
+                        eatenFigure = elementToRemoveB.Name;
+                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+                        Console.WriteLine("by:" + $"{ f.Name}");
 
+                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                        ChangeMoveTurn();
+                        
+                    }
                 }
-                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                ChangeMoveTurn();
+                else {
+                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+                    ChangeMoveTurn();
+                    
+                }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
+        }
+
+        private static bool BishopCheckDistance(IFigure figureToMove, Field destinationField, IFigure figureInWay)
+        {
+            if (figureToMove.Field.CheckDistance(destinationField) > figureToMove.Field.CheckDistance(figureInWay.Field)
+                && destinationField.CheckDistance(figureInWay.Field) < destinationField.CheckDistance(figureToMove.Field)) {
+                return true;
+            }
+            return false;
+        }
+
+        private static bool BishopMoveCheck(IFigure f, Field destinationField)
+        {
+            return f.Field.CheckDiagonal(destinationField);
+
+
         }
 
         private static void MoveFigure(IFigure f) 
@@ -272,23 +510,19 @@ namespace ChessProblem
                 case "BLACKLEFTKNIGHT":
                     MoveKnight(f, destinationField);
                     break;
-                case "WHITELEFTQUEEN":
-                case "WHITERIGHTQUEEN":
-                case "BLACKRIGHTQUEEN":
-                case "BLACKLEFTQUEEN":
+                case "WHITENONEQUEEN":
+                case "BLACKNONEQUEEN":
                     MoveQueen(f, destinationField);
                     break;
-                case "WHITELEFTKING":
-                case "WHITERIGHTKING":
-                case "BLACKRIGHTKING":
-                case "BLACKLEFTKING":
+                case "WHITENONEKING":
+                case "BLACKNONEKING":
                     MoveKing(f, destinationField);
                     break;
                 case "WHITELEFTBISHOP":
                 case "WHITERIGHTBISHOP":
                 case "BLACKRIGHTBISHOP":
                 case "BLACKLEFTBISHOP":
-                    MoveKing(f, destinationField);
+                    MoveBishop(f, destinationField);
                     break;
 
             }
@@ -432,9 +666,6 @@ namespace ChessProblem
             //        break;
             //}
 
-            printBoard(myBoard);
-            choseFigure();
-
 
         }
         private static void printBoard(Board myBoard)
@@ -446,12 +677,12 @@ namespace ChessProblem
                     {
                         foreach (IFigure a in myBoard.FiguresList) {
                             
-                            if (a.Color == Color.white)
+                            if (a.Color == Color.WHITE)
                             {
                                 a.Mark = char.ToLower(a.Mark);
                             }else
                                 a.Mark = char.ToUpper(a.Mark);
-
+                            
                             if (f.CheckDistance(a.Field) == 0) {
                                 Console.Write(a.Mark);
                                 break;   
