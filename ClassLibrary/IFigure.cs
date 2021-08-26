@@ -13,7 +13,7 @@ namespace ClassLibrary
         public Field Field{ get; set; }
         public char Mark { get; set; } 
 
-        void Move(Field destinationField);
+        void Move(Field destinationField, Board myBoard);
 
         public bool CheckMove(Field destinationField);
 

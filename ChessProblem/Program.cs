@@ -60,7 +60,6 @@ namespace ChessProblem
                 printBoard(myBoard);
                 choseFigure();
             }
-            Console.WriteLine();
             
         }
         private static Field setCurrentField(Field f)
@@ -124,7 +123,7 @@ namespace ChessProblem
             
         //}
 
-        private static void MoveRook(IFigure f, Field destinationField)
+       /* private static void MoveRook(IFigure f, Field destinationField)
         {//f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field)
             IFigure elementToRemoveR = null;
             string eatenFigure;
@@ -183,7 +182,8 @@ namespace ChessProblem
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
-
+       */
+       /*
         private static bool CheckFigureInWay(IFigure FigureToMove, IFigure FigureInWay, Field destinationField)
         {
             if (FigureToMove.Field.CheckDistance(FigureInWay.Field) < FigureToMove.Field.CheckDistance(destinationField) &&
@@ -199,8 +199,8 @@ namespace ChessProblem
         {
             return f.Field.RowNumber == field.RowNumber || f.Field.ColumnNumber == field.ColumnNumber;
         }
-
-        private static void MoveKnight(IFigure f, Field destinationField) 
+       */
+        /*private static void MoveKnight(IFigure f, Field destinationField) 
         {
             if (destinationField.CheckDistance(f.Field) == 3 && !destinationField.CheckRow(f.Field) && !destinationField.CheckColumn(f.Field))
             {
@@ -257,232 +257,232 @@ namespace ChessProblem
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
+        */
+        //private static void MoveQueen(IFigure f, Field destinationField) 
+        //{
+        //    if (MoveQueenCheckDiagonal(f,destinationField) || MoveQueenCheckRow(f,destinationField) || MoveQueenCheckColumn(f,destinationField))
+        //    {
+        //        foreach (IFigure f1 in myBoard.FiguresList)
+        //        {
+        //            if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckDiagonal(f, destinationField) && MoveQueenCheckDiagonal(f, f1.Field))
+        //            {
+        //                Console.WriteLine("Figure is on the way");
+        //                return;
 
-        private static void MoveQueen(IFigure f, Field destinationField) 
-        {
-            if (MoveQueenCheckDiagonal(f,destinationField) || MoveQueenCheckRow(f,destinationField) || MoveQueenCheckColumn(f,destinationField))
-            {
-                foreach (IFigure f1 in myBoard.FiguresList)
-                {
-                    if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckDiagonal(f, destinationField) && MoveQueenCheckDiagonal(f, f1.Field))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
+        //            } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckRow(f, destinationField) && MoveQueenCheckRow(f, f1.Field)) {
+        //                Console.WriteLine("Figure is on the way");
+        //                return;
+        //            } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckColumn(f, destinationField) && MoveQueenCheckColumn(f, f1.Field)) {
+        //                Console.WriteLine("Figure is on the way");
+        //                return;
+        //            }
 
-                    } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckRow(f, destinationField) && MoveQueenCheckRow(f, f1.Field)) {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    } else if (checkQueenWay(f, f1, destinationField) && MoveQueenCheckColumn(f, destinationField) && MoveQueenCheckColumn(f, f1.Field)) {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    }
+        //        }
+        //        string eatenFigure;
+        //        IFigure elementToRemoveQ = null;
+        //        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
-                }
-                string eatenFigure;
-                IFigure elementToRemoveQ = null;
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+        //        if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+        //        {
+        //            foreach (IFigure f1 in myBoard.FiguresList)
+        //            {
+        //                if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+        //                {
+        //                    elementToRemoveQ = f1;
 
-                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
-                {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveQ = f1;
+        //                }
 
-                        }
-
-                    }
-                    if (f.Color == elementToRemoveQ.Color)
-                    {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //            }
+        //            if (f.Color == elementToRemoveQ.Color)
+        //            {
+        //                Console.WriteLine("Figure can't eat same color figure");
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                         
-                    }
-                    else
-                    {
-                        myBoard.FiguresList.Remove(elementToRemoveQ);
-                        eatenFigure = elementToRemoveQ.Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ f.Name}");
+        //            }
+        //            else
+        //            {
+        //                myBoard.FiguresList.Remove(elementToRemoveQ);
+        //                eatenFigure = elementToRemoveQ.Name;
+        //                Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+        //                Console.WriteLine("by:" + $"{ f.Name}");
 
-                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                        ChangeMoveTurn();
+        //                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //                ChangeMoveTurn();
                         
-                    }
-                }
-                else
-                {
-                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    ChangeMoveTurn();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //            ChangeMoveTurn();
                     
-                }
-            }
-            else Console.WriteLine("Ilegal move enter correct coordinates");
+        //        }
+        //    }
+        //    else Console.WriteLine("Ilegal move enter correct coordinates");
 
-        }
+        //}
 
-        private static bool checkQueenWay(IFigure FigureToMove, IFigure FigureInWay, Field destinationField)
-        {
-            if (FigureToMove.Field.CheckDistance(FigureInWay.Field) < FigureToMove.Field.CheckDistance(destinationField) &&
-                destinationField.CheckDistance(FigureInWay.Field) < destinationField.CheckDistance(FigureToMove.Field))
-            {
+        //private static bool checkQueenWay(IFigure FigureToMove, IFigure FigureInWay, Field destinationField)
+        //{
+        //    if (FigureToMove.Field.CheckDistance(FigureInWay.Field) < FigureToMove.Field.CheckDistance(destinationField) &&
+        //        destinationField.CheckDistance(FigureInWay.Field) < destinationField.CheckDistance(FigureToMove.Field))
+        //    {
 
-                return true;
-            }
-            return false;
-        }
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
-        private static bool MoveQueenCheckDiagonal(IFigure figure, Field destinationField)
-        {
-            return destinationField.CheckDiagonal(figure.Field) == true;
+        //private static bool MoveQueenCheckDiagonal(IFigure figure, Field destinationField)
+        //{
+        //    return destinationField.CheckDiagonal(figure.Field) == true;
 
-        }
-        private static bool MoveQueenCheckRow(IFigure figure, Field destinationField)
-        {
-            return destinationField.CheckRow(figure.Field) == true;
+        //}
+        //private static bool MoveQueenCheckRow(IFigure figure, Field destinationField)
+        //{
+        //    return destinationField.CheckRow(figure.Field) == true;
 
-        }
-        private static bool MoveQueenCheckColumn(IFigure figure, Field destinationField)
-        {
-            return destinationField.CheckColumn(figure.Field) == true;
+        //}
+        //private static bool MoveQueenCheckColumn(IFigure figure, Field destinationField)
+        //{
+        //    return destinationField.CheckColumn(figure.Field) == true;
 
-        }
+        //}
 
-        private static void MoveKing(IFigure f, Field destinationField)
-        {
-            if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true && destinationField.CheckDistance(f.Field) == 1)
-            {
-                foreach (IFigure f1 in myBoard.FiguresList)
-                {
-                    if (f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field))
-                    {
-                        Console.WriteLine("Figure on the way");
+        //private static void MoveKing(IFigure f, Field destinationField)
+        //{
+        //    if (destinationField.CheckDiagonal(f.Field) == true || destinationField.CheckRow(f.Field) == true || destinationField.CheckColumn(f.Field) == true && destinationField.CheckDistance(f.Field) == 1)
+        //    {
+        //        foreach (IFigure f1 in myBoard.FiguresList)
+        //        {
+        //            if (f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field))
+        //            {
+        //                Console.WriteLine("Figure on the way");
 
-                    }
+        //            }
 
-                }
-                string eatenFigure;
-                IFigure elementToRemoveK = null;
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+        //        }
+        //        string eatenFigure;
+        //        IFigure elementToRemoveK = null;
+        //        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
-                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
-                {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveK = f1;
+        //        if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+        //        {
+        //            foreach (IFigure f1 in myBoard.FiguresList)
+        //            {
+        //                if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+        //                {
+        //                    elementToRemoveK = f1;
 
-                        }
+        //                }
 
-                    }
-                    if (f.Color == elementToRemoveK.Color)
-                    {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //            }
+        //            if (f.Color == elementToRemoveK.Color)
+        //            {
+        //                Console.WriteLine("Figure can't eat same color figure");
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                         
-                    }
-                    else
-                    {
-                        myBoard.FiguresList.Remove(elementToRemoveK);
-                        eatenFigure = elementToRemoveK
-                            .Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ f.Name}");
+        //            }
+        //            else
+        //            {
+        //                myBoard.FiguresList.Remove(elementToRemoveK);
+        //                eatenFigure = elementToRemoveK
+        //                    .Name;
+        //                Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+        //                Console.WriteLine("by:" + $"{ f.Name}");
 
-                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                        ChangeMoveTurn();
+        //                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //                ChangeMoveTurn();
                         
-                    }
-                }
-                else
-                {
-                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    ChangeMoveTurn();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //            ChangeMoveTurn();
                     
-                }
-            }
-            else Console.WriteLine("Ilegal move enter correct coordinates");
+        //        }
+        //    }
+        //    else Console.WriteLine("Ilegal move enter correct coordinates");
 
             
-        }
+        //}
 
-        private static void MoveBishop(IFigure f, Field destinationField)
-        {
+        //private static void MoveBishop(IFigure f, Field destinationField)
+        //{
  
-            if (BishopMoveCheck(f,destinationField))
-            {
-                foreach (IFigure f1 in myBoard.FiguresList)
-                {
-                    if (BishopMoveCheck(f, f1.Field) && BishopCheckDistance(f,destinationField,f1))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    }
+        //    if (BishopMoveCheck(f,destinationField))
+        //    {
+        //        foreach (IFigure f1 in myBoard.FiguresList)
+        //        {
+        //            if (BishopMoveCheck(f, f1.Field) && BishopCheckDistance(f,destinationField,f1))
+        //            {
+        //                Console.WriteLine("Figure is on the way");
+        //                return;
+        //            }
 
-                }
-                string eatenFigure;
-                IFigure elementToRemoveB = null;
-                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
+        //        }
+        //        string eatenFigure;
+        //        IFigure elementToRemoveB = null;
+        //        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = false;
 
-                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
-                {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveB = f1;
-                        }
-                    }
-                    if (f.Color == elementToRemoveB.Color)
-                    {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //        if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+        //        {
+        //            foreach (IFigure f1 in myBoard.FiguresList)
+        //            {
+        //                if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+        //                {
+        //                    elementToRemoveB = f1;
+        //                }
+        //            }
+        //            if (f.Color == elementToRemoveB.Color)
+        //            {
+        //                Console.WriteLine("Figure can't eat same color figure");
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
                         
-                    }
-                    else
-                    {
-                        myBoard.FiguresList.Remove(elementToRemoveB);
-                        eatenFigure = elementToRemoveB.Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ f.Name}");
+        //            }
+        //            else
+        //            {
+        //                myBoard.FiguresList.Remove(elementToRemoveB);
+        //                eatenFigure = elementToRemoveB.Name;
+        //                Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
+        //                Console.WriteLine("by:" + $"{ f.Name}");
 
-                        f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                        myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                        ChangeMoveTurn();
+        //                f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //                myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //                ChangeMoveTurn();
                         
-                    }
-                }
-                else {
-                    f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
-                    myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
-                    ChangeMoveTurn();
+        //            }
+        //        }
+        //        else {
+        //            f.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+        //            myBoard.TheGrid[f.Field.RowNumber, f.Field.ColumnNumber].CurrentlyOccupied = true;
+        //            ChangeMoveTurn();
                     
-                }
-            }
-            else Console.WriteLine("Ilegal move enter correct coordinates");
-        }
+        //        }
+        //    }
+        //    else Console.WriteLine("Ilegal move enter correct coordinates");
+        //}
 
-        private static bool BishopCheckDistance(IFigure figureToMove, Field destinationField, IFigure figureInWay)
-        {
-            if (figureToMove.Field.CheckDistance(destinationField) > figureToMove.Field.CheckDistance(figureInWay.Field)
-                && destinationField.CheckDistance(figureInWay.Field) < destinationField.CheckDistance(figureToMove.Field)) {
-                return true;
-            }
-            return false;
-        }
+        //private static bool BishopCheckDistance(IFigure figureToMove, Field destinationField, IFigure figureInWay)
+        //{
+        //    if (figureToMove.Field.CheckDistance(destinationField) > figureToMove.Field.CheckDistance(figureInWay.Field)
+        //        && destinationField.CheckDistance(figureInWay.Field) < destinationField.CheckDistance(figureToMove.Field)) {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
-        private static bool BishopMoveCheck(IFigure f, Field destinationField)
-        {
-            return f.Field.CheckDiagonal(destinationField);
+        //private static bool BishopMoveCheck(IFigure f, Field destinationField)
+        //{
+        //    return f.Field.CheckDiagonal(destinationField);
 
 
-        }
+        //}
 
         private static void MoveFigure(IFigure f) 
         {
@@ -496,37 +496,37 @@ namespace ChessProblem
             int newPositionColumn = int.Parse(Console.ReadLine());
             Field destinationField = new Field(newPositionRow, newPositionColumn);
 
-            //f.Move(destinationField, myBoard);
-            switch (f.Name)
-            {
-                case "WHITELEFTROOK":
-                case "WHITERIGHTROOK":
-                case "BLACKRIGHTROOK":
-                case "BLACKLEFTROOK":
-                    MoveRook(f, destinationField);
-                    break;
-                case "WHITELEFTKNIGHT":
-                case "WHITERIGHTKNIGHT":
-                case "BLACKRIGHTKNIGHT":
-                case "BLACKLEFTKNIGHT":
-                    MoveKnight(f, destinationField);
-                    break;
-                case "WHITENONEQUEEN":
-                case "BLACKNONEQUEEN":
-                    MoveQueen(f, destinationField);
-                    break;
-                case "WHITENONEKING":
-                case "BLACKNONEKING":
-                    MoveKing(f, destinationField);
-                    break;
-                case "WHITELEFTBISHOP":
-                case "WHITERIGHTBISHOP":
-                case "BLACKRIGHTBISHOP":
-                case "BLACKLEFTBISHOP":
-                    MoveBishop(f, destinationField);
-                    break;
+            f.Move(destinationField, myBoard);
+            //switch (f.Name)
+            //{
+            //    case "WHITELEFTROOK":
+            //    case "WHITERIGHTROOK":
+            //    case "BLACKRIGHTROOK":
+            //    case "BLACKLEFTROOK":
+            //        MoveRook(f, destinationField);
+            //        break;
+            //    case "WHITELEFTKNIGHT":
+            //    case "WHITERIGHTKNIGHT":
+            //    case "BLACKRIGHTKNIGHT":
+            //    case "BLACKLEFTKNIGHT":
+            //        MoveKnight(f, destinationField);
+            //        break;
+            //    case "WHITENONEQUEEN":
+            //    case "BLACKNONEQUEEN":
+            //        MoveQueen(f, destinationField);
+            //        break;
+            //    case "WHITENONEKING":
+            //    case "BLACKNONEKING":
+            //        MoveKing(f, destinationField);
+            //        break;
+            //    case "WHITELEFTBISHOP":
+            //    case "WHITERIGHTBISHOP":
+            //    case "BLACKRIGHTBISHOP":
+            //    case "BLACKLEFTBISHOP":
+            //        MoveBishop(f, destinationField);
+            //        break;
 
-            }
+            //}
 
             //switch (f.Mark)
             //{
