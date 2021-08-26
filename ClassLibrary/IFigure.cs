@@ -13,6 +13,9 @@ namespace ClassLibrary
         public Field Field{ get; set; }
         public char Mark { get; set; } 
 
-        void Move(int row,int column);
+        void Move(Field destinationField);
+
+        public bool CheckMove(Field destinationField);
+
     }
 }

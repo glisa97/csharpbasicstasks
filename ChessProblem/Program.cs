@@ -7,10 +7,10 @@ namespace ChessProblem
     public class Program
     {
         static Board myBoard = new Board(8);
-        private static bool IsWhiteTurn;
+        //private static bool IsWhiteTurn;
         public static void Main(string[] args)
         {
-            IsWhiteTurn = true;
+            myBoard.IsWhiteTurn = true;
            
             Rook r = new Rook(Color.WHITE, new Field(0, 7), FigureSide.LEFT, FigureNames.ROOK);
             Knight n = new Knight(Color.WHITE, new Field(0, 6), FigureSide.LEFT, FigureNames.KNIGHT);
@@ -72,11 +72,11 @@ namespace ChessProblem
             
             
 
-            string message = IsWhiteTurn ? "WHITE figure field row:" :
+            string message = myBoard.IsWhiteTurn ? "WHITE figure field row:" :
                                            "BLACK figure field row:";
             Console.WriteLine(message);
             int PositionRow = int.Parse(Console.ReadLine());
-            message = IsWhiteTurn ? "WHITE figure field column:" :
+            message = myBoard.IsWhiteTurn ? "WHITE figure field column:" :
                                             "BLACK figure field column:";
 
             Console.WriteLine(message);
@@ -88,10 +88,10 @@ namespace ChessProblem
 
                 if (f1.Field.RowNumber == PositionRow && f1.Field.ColumnNumber == PositionColumn)
                 {
-                    if (IsWhiteTurn == true && f1.Color != Color.WHITE) {
+                    if (myBoard.IsWhiteTurn == true && f1.Color != Color.WHITE) {
                         Console.WriteLine("You need to play with white color");
                         return;
-                    } else if (IsWhiteTurn == false && f1.Color == Color.WHITE) {
+                    } else if (myBoard.IsWhiteTurn == false && f1.Color == Color.WHITE) {
                         Console.WriteLine("You need to play with black color");
                         return;
                     }
@@ -111,18 +111,18 @@ namespace ChessProblem
             
         }
 
-        private static void ChangeMoveTurn() 
-        {
-            if (IsWhiteTurn == true)
-            {
-                IsWhiteTurn = false;
-            }
-            else
-            {
-                IsWhiteTurn = true;
-            }
+        //private static void ChangeMoveTurn() 
+        //{
+        //    if (IsWhiteTurn == true)
+        //    {
+        //        IsWhiteTurn = false;
+        //    }
+        //    else
+        //    {
+        //        IsWhiteTurn = true;
+        //    }
             
-        }
+        //}
 
         private static void MoveRook(IFigure f, Field destinationField)
         {//f.Field.CheckDistance(destinationField) > f.Field.CheckDistance(f1.Field)
@@ -486,16 +486,17 @@ namespace ChessProblem
 
         private static void MoveFigure(IFigure f) 
         {
-            string message = IsWhiteTurn ? "WHITE Destination field row:" :
+            string message = myBoard.IsWhiteTurn ? "WHITE Destination field row:" :
                                            "BLACK Destination field row:";
             Console.WriteLine(message);
             int newPositionRow = int.Parse(Console.ReadLine());
-            message = IsWhiteTurn ? "WHITE Destination field column:" :
+            message = myBoard.IsWhiteTurn ? "WHITE Destination field column:" :
                                     "BLACK Destination field column:";
             Console.WriteLine(message);
             int newPositionColumn = int.Parse(Console.ReadLine());
             Field destinationField = new Field(newPositionRow, newPositionColumn);
 
+            //f.Move(destinationField, myBoard);
             switch (f.Name)
             {
                 case "WHITELEFTROOK":

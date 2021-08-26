@@ -34,5 +34,15 @@ namespace ClassLibrary
             this.Field.RowNumber = row;
             this.Field.ColumnNumber = column;
         }
+
+        public void Move(Field destinationField)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CheckMove(Field destinationField)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

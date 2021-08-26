@@ -12,6 +12,9 @@ namespace ClassLibrary
         public Field[,] TheGrid { get; set; }
         public List<IFigure> FiguresList { get; set; }
 
+        public bool IsWhiteTurn { get; set; }
+
+
         public Board(int s)
         {
             Size = s;
@@ -34,6 +37,19 @@ namespace ClassLibrary
                   /*  TheGrid[i, j].CurrentlyOccupied = false;*/
                 }
             } 
+        }
+
+        public void ChangeMoveTurn()
+        {
+            if (IsWhiteTurn == true)
+            {
+                IsWhiteTurn = false;
+            }
+            else
+            {
+                IsWhiteTurn = true;
+            }
+
         }
     }
 
