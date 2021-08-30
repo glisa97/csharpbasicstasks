@@ -12,6 +12,7 @@ namespace ClassLibrary
         KNIGHT,
         BISHOP,
         QUEEN,
-        KING
+        KING,
+        PAWN
     }
 }

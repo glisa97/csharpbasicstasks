@@ -30,6 +30,24 @@ namespace ChessProblem
             Knight n3 = new Knight(Color.BLACK, new Field(7, 6), FigureSide.RIGHT, FigureNames.KNIGHT);
             Rook r3 = new Rook(Color.BLACK, new Field(7, 7), FigureSide.RIGHT, FigureNames.ROOK);
 
+            Pawn pawn1 = new Pawn(Color.WHITE, new Field(1, 0));
+            Pawn pawn2 = new Pawn(Color.WHITE, new Field(1, 1));
+            Pawn pawn3 = new Pawn(Color.WHITE, new Field(1, 2));
+            Pawn pawn4 = new Pawn(Color.WHITE, new Field(1, 3));
+            Pawn pawn5 = new Pawn(Color.WHITE, new Field(1, 4));
+            Pawn pawn6 = new Pawn(Color.WHITE, new Field(1, 5));
+            Pawn pawn7 = new Pawn(Color.WHITE, new Field(1, 6));
+            Pawn pawn8 = new Pawn(Color.WHITE, new Field(1, 7));
+
+            Pawn pawn9 = new Pawn(Color.BLACK, new Field(6, 0));
+            Pawn pawn10 = new Pawn(Color.BLACK, new Field(6, 1));
+            Pawn pawn11 = new Pawn(Color.BLACK, new Field(6, 2));
+            Pawn pawn12 = new Pawn(Color.BLACK, new Field(6, 3));
+            Pawn pawn13 = new Pawn(Color.BLACK, new Field(6, 4));
+            Pawn pawn14 = new Pawn(Color.BLACK, new Field(6, 5));
+            Pawn pawn15 = new Pawn(Color.BLACK, new Field(6, 6));
+            Pawn pawn16 = new Pawn(Color.BLACK, new Field(6, 7));
+
             myBoard.FiguresList.Add(r);
             myBoard.FiguresList.Add(n);
             myBoard.FiguresList.Add(b);
@@ -46,6 +64,23 @@ namespace ChessProblem
             myBoard.FiguresList.Add(b3);
             myBoard.FiguresList.Add(n3);
             myBoard.FiguresList.Add(r3);
+            myBoard.FiguresList.Add(pawn1);
+            myBoard.FiguresList.Add(pawn2);
+            myBoard.FiguresList.Add(pawn3);
+            myBoard.FiguresList.Add(pawn4);
+            myBoard.FiguresList.Add(pawn5);
+            myBoard.FiguresList.Add(pawn6);
+            myBoard.FiguresList.Add(pawn7);
+            myBoard.FiguresList.Add(pawn8);
+            myBoard.FiguresList.Add(pawn9);
+            myBoard.FiguresList.Add(pawn10);
+            myBoard.FiguresList.Add(pawn11);
+            myBoard.FiguresList.Add(pawn12);
+            myBoard.FiguresList.Add(pawn13);
+            myBoard.FiguresList.Add(pawn14);
+            myBoard.FiguresList.Add(pawn15);
+            myBoard.FiguresList.Add(pawn16);
+
 
             foreach (IFigure f in myBoard.FiguresList) {
                 Field currentField = setCurrentField(f.Field);
