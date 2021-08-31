@@ -6,37 +6,17 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class Bishop :IFigure
+    public class Bishop : Figure
     {
         public string Name { get; set; }
-        public Color Color { get; set; }
-        public Field Field { get; set; }
-        public char Mark { get; set; }
 
-        public Bishop(Color color, Field field, FigureSide figureSide, FigureNames figureNames)
-        {
-            Color = color;
-            Field = field;
-            if (color == Color.WHITE)
-            {
-                Mark = 'b';
-            }
-            else 
-            {
-                Mark = 'B';
-            }
-            Name = $"{Color}{figureSide}{figureNames}";
+        public Bishop(Color color, Field field, string mark) : base(color, field, mark)
+        {         
         }
 
-        private void SetCoorinates(int row, int column) {
-            
-            this.Field.RowNumber = row;
-            this.Field.ColumnNumber = column;
-        }
+               
 
-        
-
-        public bool CheckMove(Field destinationField)
+        public override bool CheckMove(Field destinationField)
         {
             return this.Field.CheckDiagonal(destinationField);
         }
@@ -48,7 +28,7 @@ namespace ClassLibrary
             }
             return false;
         }
-        public void Move(Field destinationField, Board myBoard)
+        public override void Move(Field destinationField, Board myBoard)
         {
             if (this.CheckMove(destinationField))
             {

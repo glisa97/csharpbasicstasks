@@ -6,36 +6,16 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class Pawn : IFigure 
+    public class Pawn : Figure 
     {
         public string Name { get; set; }
-        public Color Color { get; set; }
-        public Field Field { get; set; }
-        public char Mark { get; set; }
 
-        public Pawn(Color color, Field field)
-        {
-            Color = color;
-            Field = field;
-            //Mark = mark;
-            if (color == Color.WHITE)
-            {
-                Mark = 'p';
-            }
-            else
-            {
-                Mark = 'P';
-            }
-            
+        public Pawn(Color color, Field field, string mark) : base(color, field, mark)
+        {            
         }
-        private void SetCoordinates(int row, int column)
-        {
+       
 
-            this.Field.RowNumber = row;
-            this.Field.ColumnNumber = column;
-        }
-
-        public bool CheckMove(Field destinationField)
+        public override bool CheckMove(Field destinationField)
         {
             if (this.Color == Color.WHITE && this.Field.RowNumber < destinationField.RowNumber ||
                 this.Color == Color.BLACK && this.Field.RowNumber > destinationField.RowNumber)
@@ -62,7 +42,7 @@ namespace ClassLibrary
             }
             return false;
         }
-        public void Move(Field destinationField, Board myBoard)
+        public override void Move(Field destinationField, Board myBoard)
         {
             IFigure elementToRemoveR = null;
             string eatenFigure;
@@ -106,7 +86,7 @@ namespace ClassLibrary
                         Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
                         Console.WriteLine("by:" + $"{ this.Name}");
 
-                        this.SetCoordinates(destinationField.RowNumber, destinationField.ColumnNumber);
+                        this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                         myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                         myBoard.ChangeMoveTurn();
 
@@ -114,7 +94,7 @@ namespace ClassLibrary
                 }
                 else
                 {
-                    this.SetCoordinates(destinationField.RowNumber, destinationField.ColumnNumber);
+                    this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                     myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                     myBoard.ChangeMoveTurn();
 

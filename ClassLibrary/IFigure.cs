@@ -15,7 +15,7 @@ namespace ClassLibrary
 
         void Move(Field destinationField, Board myBoard);
 
-        public bool CheckMove(Field destinationField);
+        bool CheckMove(Field destinationField);
 
     }
 }

@@ -13,7 +13,7 @@ namespace ChessProblemTests
         [Test]
         public void Test1()
         {
-            Bishop bishop = new Bishop(Color.WHITE, new Field(3,3), FigureSide.LEFT, FigureNames.BISHOP);
+            Bishop bishop = new Bishop(Color.WHITE, new Field(3,3),"b");
         }
     }
 }

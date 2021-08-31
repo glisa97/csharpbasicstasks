@@ -6,36 +6,17 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class King : IFigure
+    public class King : Figure
     {
         public string Name { get; set; }
-        public Color Color { get; set; }
-        public Field Field { get; set ; }
-        public char Mark { get; set; }
 
-        public King(Color color, Field field,FigureSide figureSide, FigureNames figureNames)
-        {
-            Color = color;
-            Field = field;
-            //Mark = mark;
-            if (color == Color.WHITE)
-            {
-                Mark = 'k';
-            }
-            else 
-            { 
-                Mark = 'K';
-            }
-            Name = $"{color}{figureSide}{figureNames}";
+        public King(Color color, Field field, string mark) : base(color,field,mark)
+        {  
         }
 
-        public void Move(int row, int column) {
-            
-            this.Field.RowNumber = row;
-            this.Field.ColumnNumber = column;
-        }
+       
 
-        public void Move(Field destinationField,Board myBoard)
+        public override void Move(Field destinationField,Board myBoard)
         {
             if (this.CheckMove(destinationField))
             {
@@ -68,7 +49,7 @@ namespace ClassLibrary
                         Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
                         Console.WriteLine("by:" + $"{ this.Name}");
 
-                        this.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                        this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                         myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                         myBoard.ChangeMoveTurn();
 
@@ -76,7 +57,7 @@ namespace ClassLibrary
                 }
                 else
                 {
-                    this.Move(destinationField.RowNumber, destinationField.ColumnNumber);
+                    this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                     myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                     myBoard.ChangeMoveTurn();
 
@@ -85,7 +66,7 @@ namespace ClassLibrary
             else Console.WriteLine("Ilegal move enter correct coordinates");
         }
 
-        public bool CheckMove(Field destinationField)
+        public override bool CheckMove(Field destinationField)
         {
             if (destinationField.CheckDiagonal(this.Field) == true && destinationField.CheckDistance(this.Field) == 2) {
                 return true;

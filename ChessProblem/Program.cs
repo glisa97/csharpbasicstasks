@@ -12,41 +12,41 @@ namespace ChessProblem
         {
             myBoard.IsWhiteTurn = true;
            
-            Rook r = new Rook(Color.WHITE, new Field(0, 7), FigureSide.LEFT, FigureNames.ROOK);
-            Knight n = new Knight(Color.WHITE, new Field(0, 6), FigureSide.LEFT, FigureNames.KNIGHT);
-            Bishop b = new Bishop(Color.WHITE, new Field(0, 5), FigureSide.LEFT, FigureNames.BISHOP);
-            Queen q = new Queen(Color.WHITE, new Field(0, 3), FigureSide.NONE, FigureNames.QUEEN);
-            King k = new King(Color.WHITE, new Field(0, 4), FigureSide.NONE, FigureNames.KING);
-            Bishop b1 = new Bishop(Color.WHITE, new Field(0, 2), FigureSide.RIGHT,FigureNames.BISHOP);
-            Knight n1 = new Knight(Color.WHITE, new Field(0, 1), FigureSide.RIGHT, FigureNames.KNIGHT);
-            Rook r1 = new Rook(Color.WHITE, new Field(0, 0), FigureSide.RIGHT, FigureNames.ROOK);
+            Rook r = new Rook(Color.WHITE, new Field(0, 7),"r");
+            Knight n = new Knight(Color.WHITE, new Field(0, 6),"n");
+            Bishop b = new Bishop(Color.WHITE, new Field(0, 5),"b");
+            Queen q = new Queen(Color.WHITE, new Field(0, 3), "q");
+            King k = new King(Color.WHITE, new Field(0, 4),"k");
+            Bishop b1 = new Bishop(Color.WHITE, new Field(0, 2),"b");
+            Knight n1 = new Knight(Color.WHITE, new Field(0, 1),"n");
+            Rook r1 = new Rook(Color.WHITE, new Field(0, 0), "r");
 
-            Rook r2 = new Rook(Color.BLACK, new Field(7, 0), FigureSide.LEFT, FigureNames.ROOK);
-            Knight n2 = new Knight(Color.BLACK, new Field(7, 1), FigureSide.LEFT, FigureNames.KNIGHT);
-            Bishop b2 = new Bishop(Color.BLACK, new Field(7, 2), FigureSide.LEFT, FigureNames.BISHOP);
-            Queen q1 = new Queen(Color.BLACK, new Field(7, 3), FigureSide.NONE, FigureNames.QUEEN);
-            King k1 = new King(Color.BLACK, new Field(7, 4), FigureSide.NONE, FigureNames.KING);
-            Bishop b3 = new Bishop(Color.BLACK, new Field(7, 5), FigureSide.RIGHT, FigureNames.BISHOP);
-            Knight n3 = new Knight(Color.BLACK, new Field(7, 6), FigureSide.RIGHT, FigureNames.KNIGHT);
-            Rook r3 = new Rook(Color.BLACK, new Field(7, 7), FigureSide.RIGHT, FigureNames.ROOK);
+            Rook r2 = new Rook(Color.BLACK, new Field(7, 0),"r");
+            Knight n2 = new Knight(Color.BLACK, new Field(7, 1),"n");
+            Bishop b2 = new Bishop(Color.BLACK, new Field(7, 2),"b");
+            Queen q1 = new Queen(Color.BLACK, new Field(7, 3), "q");
+            King k1 = new King(Color.BLACK, new Field(7, 4), "k");
+            Bishop b3 = new Bishop(Color.BLACK, new Field(7, 5),"b");
+            Knight n3 = new Knight(Color.BLACK, new Field(7, 6), "n");
+            Rook r3 = new Rook(Color.BLACK, new Field(7, 7),"r");
 
-            Pawn pawn1 = new Pawn(Color.WHITE, new Field(1, 0));
-            Pawn pawn2 = new Pawn(Color.WHITE, new Field(1, 1));
-            Pawn pawn3 = new Pawn(Color.WHITE, new Field(1, 2));
-            Pawn pawn4 = new Pawn(Color.WHITE, new Field(1, 3));
-            Pawn pawn5 = new Pawn(Color.WHITE, new Field(1, 4));
-            Pawn pawn6 = new Pawn(Color.WHITE, new Field(1, 5));
-            Pawn pawn7 = new Pawn(Color.WHITE, new Field(1, 6));
-            Pawn pawn8 = new Pawn(Color.WHITE, new Field(1, 7));
+            Pawn pawn1 = new Pawn(Color.WHITE, new Field(1, 0),"p");
+            Pawn pawn2 = new Pawn(Color.WHITE, new Field(1, 1), "p");
+            Pawn pawn3 = new Pawn(Color.WHITE, new Field(1, 2), "p");
+            Pawn pawn4 = new Pawn(Color.WHITE, new Field(1, 3), "p");
+            Pawn pawn5 = new Pawn(Color.WHITE, new Field(1, 4), "p");
+            Pawn pawn6 = new Pawn(Color.WHITE, new Field(1, 5), "p");
+            Pawn pawn7 = new Pawn(Color.WHITE, new Field(1, 6), "p");
+            Pawn pawn8 = new Pawn(Color.WHITE, new Field(1, 7), "p");
 
-            Pawn pawn9 = new Pawn(Color.BLACK, new Field(6, 0));
-            Pawn pawn10 = new Pawn(Color.BLACK, new Field(6, 1));
-            Pawn pawn11 = new Pawn(Color.BLACK, new Field(6, 2));
-            Pawn pawn12 = new Pawn(Color.BLACK, new Field(6, 3));
-            Pawn pawn13 = new Pawn(Color.BLACK, new Field(6, 4));
-            Pawn pawn14 = new Pawn(Color.BLACK, new Field(6, 5));
-            Pawn pawn15 = new Pawn(Color.BLACK, new Field(6, 6));
-            Pawn pawn16 = new Pawn(Color.BLACK, new Field(6, 7));
+            Pawn pawn9 = new Pawn(Color.BLACK, new Field(6, 0), "p");
+            Pawn pawn10 = new Pawn(Color.BLACK, new Field(6, 1), "p");
+            Pawn pawn11 = new Pawn(Color.BLACK, new Field(6, 2), "p");
+            Pawn pawn12 = new Pawn(Color.BLACK, new Field(6, 3), "p");
+            Pawn pawn13 = new Pawn(Color.BLACK, new Field(6, 4), "p");
+            Pawn pawn14 = new Pawn(Color.BLACK, new Field(6, 5), "p");
+            Pawn pawn15 = new Pawn(Color.BLACK, new Field(6, 6), "p");
+            Pawn pawn16 = new Pawn(Color.BLACK, new Field(6, 7), "p");
 
             myBoard.FiguresList.Add(r);
             myBoard.FiguresList.Add(n);
@@ -81,21 +81,15 @@ namespace ChessProblem
             myBoard.FiguresList.Add(pawn15);
             myBoard.FiguresList.Add(pawn16);
 
-
             foreach (IFigure f in myBoard.FiguresList) {
                 Field currentField = setCurrentField(f.Field);
                 currentField.CurrentlyOccupied = true;
             }
-            
-
-            
             while (true)
-            {
-                
+            {    
                 printBoard(myBoard);
                 choseFigure();
             }
-            
         }
         private static Field setCurrentField(Field f)
         {
@@ -103,9 +97,6 @@ namespace ChessProblem
         }
         private static void choseFigure() {
             
-            
-            
-
             string message = myBoard.IsWhiteTurn ? "WHITE figure field row:" :
                                            "BLACK figure field row:";
             Console.WriteLine(message);
