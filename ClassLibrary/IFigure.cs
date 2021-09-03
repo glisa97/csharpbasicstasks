@@ -8,7 +8,7 @@ namespace ClassLibrary
 {
     public interface IFigure
     {
-        public string Name { get; set; }
+        
         public Color Color { get; set; }
         public Field Field{ get; set; }
         public char Mark { get; set; } 

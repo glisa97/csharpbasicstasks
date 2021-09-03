@@ -8,10 +8,12 @@ namespace ClassLibrary
 {
     public abstract class Figure : IFigure
     {
-        public string Name { get; set; }
+        
         public Color Color { get; set; }
         public Field Field { get; set; }
         public char Mark { get; set; }
+
+        
 
         public Figure(Color color, Field field, string mark)
         {
@@ -32,6 +34,21 @@ namespace ClassLibrary
 
             this.Field.RowNumber = row;
             this.Field.ColumnNumber = column;
+        }
+
+        protected Figure GetFigureFromDestionationField(Field destinationField, Board myBoard)
+        {
+            Figure elementToRemoveQ = null;
+            foreach (Figure f1 in myBoard.FiguresList)
+            {
+                if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
+                {
+                    elementToRemoveQ = f1;
+
+                }
+
+            }
+            return elementToRemoveQ;
         }
 
 

@@ -8,77 +8,89 @@ namespace ClassLibrary
 {
     public class Queen : Figure
     {
-        public string Name { get; set; }
 
         public Queen(Color color, Field field, string mark) : base(color, field, mark)
         { 
         }
 
 
+        private bool IsAnotherFigureInMovePath(Field destinationField, Board myBoard) 
+        {
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+                if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckDiagonal(this, destinationField) && MoveQueenCheckDiagonal(this, f1.Field))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+
+                }
+                else if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckRow(this, destinationField) && MoveQueenCheckRow(this, f1.Field))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+                }
+                else if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckColumn(this, destinationField) && MoveQueenCheckColumn(this, f1.Field))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
+     
+        private void IsDestinationFigureSameColorLikeSource(Figure elementToRemoveQ,Board myBoard)
+        {
+            if (this.Color == elementToRemoveQ.Color)
+            {
+                Console.WriteLine("Figure can't eat same color figure");
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+
+            }
+        }
+        private void IsDestinationFigureDifferentColorLikeSource(Figure elementToRemoveR, Field destinationField, Board myBoard)
+        {
+
+
+            if (this.Color != elementToRemoveR.Color)
+            {
+                myBoard.FiguresList.Remove(elementToRemoveR);
+
+
+                this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+                myBoard.ChangeMoveTurn();
+            }
+        }
         public override void Move(Field destinationField, Board myBoard)
         {
             if (this.CheckMove(destinationField))
             {
-                foreach (IFigure f1 in myBoard.FiguresList)
+                if (IsAnotherFigureInMovePath(destinationField, myBoard))
                 {
-                    if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckDiagonal(this, destinationField) && MoveQueenCheckDiagonal(this, f1.Field))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-
-                    }
-                    else if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckRow(this, destinationField) && MoveQueenCheckRow(this, f1.Field))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    }
-                    else if (checkQueenWay(this, f1, destinationField) && MoveQueenCheckColumn(this, destinationField) && MoveQueenCheckColumn(this, f1.Field))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    }
-
+                    return;
                 }
-                string eatenFigure;
-                IFigure elementToRemoveQ = null;
-                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = false;
-
-                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                else
                 {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveQ = f1;
 
-                        }
 
-                    }
-                    if (this.Color == elementToRemoveQ.Color)
+                    myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = false;
+
+                    if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
                     {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+                        Figure destinationFigure = GetFigureFromDestionationField(destinationField, myBoard);
+                        IsDestinationFigureSameColorLikeSource(destinationFigure, myBoard);
+                        IsDestinationFigureDifferentColorLikeSource(destinationFigure, destinationField, myBoard);
 
                     }
                     else
                     {
-                        myBoard.FiguresList.Remove(elementToRemoveQ);
-                        eatenFigure = elementToRemoveQ.Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ this.Name}");
-
                         this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                         myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                         myBoard.ChangeMoveTurn();
 
                     }
-                }
-                else
-                {
-                    this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
-                    myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
-                    myBoard.ChangeMoveTurn();
-
                 }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");

@@ -8,52 +8,50 @@ namespace ClassLibrary
 {
     public class King : Figure
     {
-        public string Name { get; set; }
 
         public King(Color color, Field field, string mark) : base(color,field,mark)
         {  
         }
 
-       
+      
+        private void IsDestinationFigureSameColorLikeSource(Figure elementToRemoveQ, Board myBoard)
+        {
+            if (this.Color == elementToRemoveQ.Color)
+            {
+                Console.WriteLine("Figure can't eat same color figure");
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+
+            }
+        }
+
+        private void IsDestinationFigureDifferentColorLikeSource(Figure elementToRemoveK, Field destinationField, Board myBoard)
+        {
+
+
+            if (this.Color != elementToRemoveK.Color)
+            {
+                myBoard.FiguresList.Remove(elementToRemoveK);
+
+
+                this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+                myBoard.ChangeMoveTurn();
+            }
+        }
 
         public override void Move(Field destinationField,Board myBoard)
         {
             if (this.CheckMove(destinationField))
             {
-               
-                string eatenFigure;
-                IFigure elementToRemoveK = null;
+        
                 myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = false;
 
                 if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
                 {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveK = f1;
+                    Figure destinationFigure = GetFigureFromDestionationField(destinationField, myBoard);
+                    IsDestinationFigureSameColorLikeSource(destinationFigure, myBoard);
+                    IsDestinationFigureDifferentColorLikeSource(destinationFigure,destinationField,myBoard);
 
-                        }
-
-                    }
-                    if (this.Color == elementToRemoveK.Color)
-                    {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
-
-                    }
-                    else
-                    {
-                        myBoard.FiguresList.Remove(elementToRemoveK);
-                        eatenFigure = elementToRemoveK.Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ this.Name}");
-
-                        this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
-                        myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
-                        myBoard.ChangeMoveTurn();
-
-                    }
                 }
                 else
                 {

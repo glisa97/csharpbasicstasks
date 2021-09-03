@@ -8,13 +8,62 @@ namespace ClassLibrary
 {
     public class Bishop : Figure
     {
-        public string Name { get; set; }
 
         public Bishop(Color color, Field field, string mark) : base(color, field, mark)
         {         
         }
 
-               
+        private bool CheckFigureInWay(IFigure FigureInWay, Field destinationField)
+        {
+            if (this.Field.CheckDistance(FigureInWay.Field) < this.Field.CheckDistance(destinationField) &&
+                destinationField.CheckDistance(FigureInWay.Field) < destinationField.CheckDistance(this.Field))
+            {
+
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsAnotherFigureInMovePath(Field destinationField, Board myBoard)
+        {
+            
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+                if (this.CheckMove(f1.Field) && this.BishopCheckDistance(f1.Field, destinationField))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
+     
+
+        private void IsDestinationFigureSameColorLikeSource(Figure elementToRemoveR, Board myBoard)
+        {
+            if (this.Color == elementToRemoveR.Color)
+            {
+                Console.WriteLine("Figure can't eat same color figure");
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+            }
+        }
+        private void IsDestinationFigureDifferentColorLikeSource(Figure elementToRemoveR, Field destinationField, Board myBoard)
+        {
+
+
+            if (this.Color != elementToRemoveR.Color)
+            {
+                myBoard.FiguresList.Remove(elementToRemoveR);
+
+
+                this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
+                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+                myBoard.ChangeMoveTurn();
+            }
+        }
+
 
         public override bool CheckMove(Field destinationField)
         {
@@ -32,53 +81,29 @@ namespace ClassLibrary
         {
             if (this.CheckMove(destinationField))
             {
-                foreach (IFigure f1 in myBoard.FiguresList)
-                {
-                    if (this.CheckMove( f1.Field) && this.BishopCheckDistance(f1.Field,destinationField))
-                    {
-                        Console.WriteLine("Figure is on the way");
-                        return;
-                    }
 
+                if (IsAnotherFigureInMovePath(destinationField, myBoard))
+                {
+                    return;
                 }
-                string eatenFigure;
-                IFigure elementToRemoveB = null;
-                myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = false;
-
-                if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                else
                 {
-                    foreach (IFigure f1 in myBoard.FiguresList)
-                    {
-                        if (f1.Field.RowNumber == destinationField.RowNumber && f1.Field.ColumnNumber == destinationField.ColumnNumber)
-                        {
-                            elementToRemoveB = f1;
-                        }
-                    }
-                    if (this.Color == elementToRemoveB.Color)
-                    {
-                        Console.WriteLine("Figure can't eat same color figure");
-                        myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
+                    myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = false;
 
+                    if (myBoard.TheGrid[destinationField.RowNumber, destinationField.ColumnNumber].CurrentlyOccupied == true)
+                    {
+
+                        Figure destinationFigure = GetFigureFromDestionationField(destinationField, myBoard);
+                        IsDestinationFigureSameColorLikeSource(destinationFigure, myBoard);
+                        IsDestinationFigureDifferentColorLikeSource(destinationFigure, destinationField, myBoard);
                     }
                     else
                     {
-                        myBoard.FiguresList.Remove(elementToRemoveB);
-                        eatenFigure = elementToRemoveB.Name;
-                        Console.WriteLine("Eaten figure: " + $"{ eatenFigure}");
-                        Console.WriteLine("by:" + $"{ this.Name}");
-
                         this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
                         myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
                         myBoard.ChangeMoveTurn();
 
                     }
-                }
-                else
-                {
-                    this.SetCoorinates(destinationField.RowNumber, destinationField.ColumnNumber);
-                    myBoard.TheGrid[this.Field.RowNumber, this.Field.ColumnNumber].CurrentlyOccupied = true;
-                    myBoard.ChangeMoveTurn();
-
                 }
             }
             else Console.WriteLine("Ilegal move enter correct coordinates");
