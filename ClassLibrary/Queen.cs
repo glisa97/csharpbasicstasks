@@ -9,9 +9,9 @@ namespace ClassLibrary
     public class Queen : Figure
     {
         public Queen(Color color, Field field, string mark) : base(color, field, mark)
-        { 
+        {
         }
-         protected override bool IsAnotherFigureInMovePath(Field destinationField, Board myBoard) 
+        protected bool QueenFigureDiagonal(Field destinationField, Board myBoard)
         {
             foreach (IFigure f1 in myBoard.FiguresList)
             {
@@ -20,18 +20,59 @@ namespace ClassLibrary
                     Console.WriteLine("Figure is on the way");
                     return true;
                 }
-                else if (CheckFigureInWay(f1, destinationField) && MoveQueenCheckRow(this, destinationField) && MoveQueenCheckRow(this, f1.Field))
-                {
-                    Console.WriteLine("Figure is on the way");
-                    return true;
-                }
-                else if (CheckFigureInWay(f1, destinationField) && MoveQueenCheckColumn(this, destinationField) && MoveQueenCheckColumn(this, f1.Field))
+            }
+            return false;
+        }
+
+        protected bool QueenFigureDiagonalCheck(Field destinationField, Board myBoard)
+        {
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+                if (CheckFigureInWay(f1, destinationField) && MoveQueenCheckDiagonal(this, destinationField) && MoveQueenCheckDiagonal(this, f1.Field))
                 {
                     Console.WriteLine("Figure is on the way");
                     return true;
                 }
             }
             return false;
+        }
+
+        protected bool QueenFigureRowCheck(Field destinationField, Board myBoard)
+        {
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+                if (CheckFigureInWay(f1, destinationField) && MoveQueenCheckRow(this, destinationField) && MoveQueenCheckRow(this, f1.Field))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        protected bool QueenFigureColumnCheck(Field destinationField, Board myBoard)
+        {
+            foreach (IFigure f1 in myBoard.FiguresList)
+            {
+                if (CheckFigureInWay(f1, destinationField) && MoveQueenCheckColumn(this, destinationField) && MoveQueenCheckColumn(this, f1.Field))
+                {
+                    Console.WriteLine("Figure is on the way");
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        protected override bool IsAnotherFigureInMovePath(Field destinationField, Board myBoard)
+        {
+            if (QueenFigureDiagonalCheck(destinationField, myBoard) == true ||
+                QueenFigureRowCheck(destinationField, myBoard) == true ||
+                QueenFigureColumnCheck(destinationField, myBoard) == true) {
+                return true;
+            }
+            return false;
+
         }
         public override void Move(Field destinationField, Board myBoard)
         {
