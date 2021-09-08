@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Dapper;
+using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TheShop
 {
-    class Program
+    public class Program
     {
         private static int totalPrice;
 
@@ -11,23 +14,38 @@ namespace TheShop
         {
             List<ItemValueRecord> ListShop1 = new List<ItemValueRecord>();
 
-            ItemValueRecord milk = new ItemValueRecord("Milk",100,1, UnitOfMeasure.L);
-            ItemValueRecord sugar = new ItemValueRecord("Sugar", 200,5, UnitOfMeasure.KG);
-            ItemValueRecord eggs = new ItemValueRecord("Eggs", 300,3, UnitOfMeasure.PIECE);
+            ItemValueRecord milk = new ItemValueRecord(1,"Milk","100 din",1, UnitOfMeasure.L.ToString());
+            ItemValueRecord sugar = new ItemValueRecord(2,"Sugar", "200 din",5, UnitOfMeasure.KG.ToString());
+            ItemValueRecord eggs = new ItemValueRecord(3,"Eggs", "300 din",3, UnitOfMeasure.PIECE.ToString());
 
             ListShop1.Add(milk);
             ListShop1.Add(sugar);
             ListShop1.Add(eggs);
+            int id = 1;
 
             foreach (ItemValueRecord item in ListShop1) 
             {
-                totalPrice += item.UnitPrice;
-                Console.WriteLine(item.Name + "  Price:" + item.UnitPrice + "  Quantity:" + item.Quantity + "  Measure:" + item.Measure);   
+                
+                totalPrice += Convert.ToInt32(item.UnitCost.Split(' ').First());
+                Console.WriteLine(item.Name + "  Price:" + item.UnitCost + "  Quantity:" + item.Quantity);
+
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopdb;User Id=postgres;Password=postgres;";
+                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+                {
+                    string selectProductByName = $"SELECT * FROM shop.product where name = '{item.Name}'";
+                    ItemValueRecord itemValueRecord = connection.Query<ItemValueRecord>(selectProductByName).Single();
+
+                    itemValueRecord.Quantity = item.Quantity;
+                    itemValueRecord.Date = DateTime.Today.ToString("yyyy-MM-dd");
+
+                    string insertrecordInInventory = $"INSERT INTO shop.inventory(id, productid, amount, date)VALUES ({id}, {itemValueRecord.Id}, {itemValueRecord.Quantity}, '{itemValueRecord.Date}');";
+                    connection.Execute(insertrecordInInventory);
+                    id++;
+                }
             }
             Console.WriteLine("------------------------");
             Console.WriteLine("Sum of prices: " + totalPrice);
 
-            RetrieveRecordFields(ListShop1);
             RetrieveRecordFields(ListShop1);
 
             
@@ -43,7 +61,7 @@ namespace TheShop
             {
                 if (item.Name == chosenItemName)
                 {
-                    Console.WriteLine(item.Name + "  Price:" + item.UnitPrice + "  Quantity:" + item.Quantity + "  Measure:" + item.Measure);
+                    Console.WriteLine(item.Name + "  Price:" + item.UnitCost + "  Quantity:" + item.Quantity);
                 }
             }
         }

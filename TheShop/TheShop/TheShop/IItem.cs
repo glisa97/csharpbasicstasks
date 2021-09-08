@@ -9,7 +9,6 @@ namespace TheShop
     public interface IItem
     {
         public string Name { get; set; }
-        public UnitOfMeasure Measure { get; set; }
         
     }
 }
