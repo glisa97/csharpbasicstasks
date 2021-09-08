@@ -28,7 +28,7 @@ namespace TheShop
             Console.WriteLine("Sum of prices: " + totalPrice);
 
             RetrieveRecordFields(ListShop1);
-            RetrieveRecordFields(ListShop1);
+            ChangeTheQuantity(ListShop1);
 
             
 
@@ -47,17 +47,21 @@ namespace TheShop
                 }
             }
         }
-        //public static void ChangeTheQuantity(List<ItemValueRecord> list)
-        //{
-        //    Console.WriteLine("Retrieve item by name:");
-        //    string chosenItemName = Console.ReadLine();
-        //    foreach (ItemValueRecord item in list)
-        //    {
-        //        if (item.Name == chosenItemName)
-        //        {
-        //            Console.WriteLine(item.Name + "  Price:" + item.UnitPrice + "  Quantity:" + item.Quantity + "  Measure:" + item.Measure);
-        //        }
-        //    }
-        //}
+        public static void ChangeTheQuantity(List<ItemValueRecord> list)
+        {
+            Console.WriteLine("Enter name of item to change quantity:");
+            string chosenItemName = Console.ReadLine();
+            Console.WriteLine("Enter new quantity:");
+            int newQuantity = int.Parse(Console.ReadLine());
+            foreach (ItemValueRecord item in list)
+            {
+                if (item.Name == chosenItemName)
+                {
+                    item.Quantity = newQuantity;
+                }
+            }
+            
+        }
+        
     }
 }
