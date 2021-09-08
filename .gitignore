@@ -6,6 +6,6 @@
 /Classes/obj
 /ClassLibrary/bin
 /ClassLibrary/obj
-/.vs
-/TheShop/bin
-/TheShop/obj
+/TheShop/TheShop/.vs
+/TheShop/TheShop/TheShop/obj
+/TheShop/TheShop/TheShop/bin
