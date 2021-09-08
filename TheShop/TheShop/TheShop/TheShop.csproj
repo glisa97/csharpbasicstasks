@@ -7,6 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.90" />
+<<<<<<< HEAD
+=======
+    <PackageReference Include="Npgsql" Version="5.0.7" />
+>>>>>>> 550a4fb23e8ec96540d85c7ee413d6108453ec0a
   </ItemGroup>
 
 </Project>

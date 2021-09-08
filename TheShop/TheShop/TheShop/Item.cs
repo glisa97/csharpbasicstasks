@@ -8,13 +8,15 @@ namespace TheShop
 {
     public abstract class Item : IItem
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public UnitOfMeasure Measure { get; set; }
+        public string UnitCost { get; set; }
 
-        public Item(string name,UnitOfMeasure measure)
+        public Item(int id, string name,string unitcost)
         {
+            Id = id;
             Name = name;
-            Measure = measure;
+            UnitCost = unitcost;
             
         }
 
