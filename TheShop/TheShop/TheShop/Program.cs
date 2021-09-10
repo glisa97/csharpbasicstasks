@@ -47,10 +47,7 @@ namespace TheShop
             Console.WriteLine("Sum of prices: " + totalPrice);
 
             RetrieveRecordFields(ListShop1);
-<<<<<<< HEAD
             ChangeTheQuantity(ListShop1);
-=======
->>>>>>> 550a4fb23e8ec96540d85c7ee413d6108453ec0a
 
             
 
