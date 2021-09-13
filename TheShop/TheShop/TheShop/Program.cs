@@ -12,7 +12,9 @@ namespace TheShop
 
         static void Main(string[] args)
         {
+
             List<ItemValueRecord> ListShop1 = new List<ItemValueRecord>();
+            List<Store> ListOfStores = new List<Store>();
 
             ItemValueRecord milk = new ItemValueRecord(1,"Milk","100 din",1, UnitOfMeasure.L.ToString());
             ItemValueRecord sugar = new ItemValueRecord(2,"Sugar", "200 din",5, UnitOfMeasure.KG.ToString());
@@ -23,13 +25,35 @@ namespace TheShop
             ListShop1.Add(eggs);
             int id = 1;
 
+            Inventory inventoryMaxi = new Inventory(milk);
+            Store Maxi = new Store("Belgrade","Maxi","Knez Mihailova",inventoryMaxi);
+            ListOfStores.Add(Maxi);
+            City belgrade = new City("Belgrade",ListOfStores);
+
+            Console.WriteLine(belgrade.Name);
+            Console.WriteLine(Maxi.NameOfCity);
+            Console.WriteLine(Maxi.StoreName);
+            Console.WriteLine(Maxi.Address);
+            
+
+            foreach (Store s in belgrade.Stores)
+            {
+               
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+                {
+                    string insertIntoStores = $"INSERT INTO shop.stores(nameofcity, storename, address)VALUES('{s.NameOfCity}','{s.StoreName}','{s.Address}');";
+                    connection.Execute(insertIntoStores);
+                
+                }
+            }
+
             foreach (ItemValueRecord item in ListShop1) 
             {
-                
                 totalPrice += Convert.ToInt32(item.UnitCost.Split(' ').First());
                 Console.WriteLine(item.Name + "  Price:" + item.UnitCost + "  Quantity:" + item.Quantity);
 
-                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopdb;User Id=postgres;Password=postgres;";
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     string selectProductByName = $"SELECT * FROM shop.product where name = '{item.Name}'";
@@ -49,11 +73,7 @@ namespace TheShop
             RetrieveRecordFields(ListShop1);
             ChangeTheQuantity(ListShop1);
 
-            
-
         }
-
-
         public static void RetrieveRecordFields(List<ItemValueRecord> list)
         {
             Console.WriteLine("Retrieve item by name:");
@@ -79,8 +99,6 @@ namespace TheShop
                     item.Quantity = newQuantity;
                 }
             }
-            
         }
-        
     }
 }
