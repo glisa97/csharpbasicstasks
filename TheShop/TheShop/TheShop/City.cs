@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace TheShop
 {
-    public abstract class Item : IItem
+    class City
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public string UnitCost { get; set; }
 
-        public Item(int id, string name,string unitcost)
+        public List<Store> Stores = new List<Store>();
+        public City(string name,List<Store> stores)
         {
-            Id = id;
             Name = name;
-            UnitCost = unitcost;
+            Stores = stores;
         }
-
     }
 }
