@@ -24,5 +24,25 @@ namespace TheShopGui
         {
             InitializeComponent();
         }
+
+        private void btnAddNewStore_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnFinishStoreAdding_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddNewInventoryItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnFinishInventoring_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
