@@ -30,14 +30,16 @@ namespace TheShopGui
             InitializeComponent();
         }
 
+
         public void btnAddNewStore_Click(object sender, RoutedEventArgs e)
-        {  
+        {
             Store addNewStoreTemp = new Store(tfCityName.Text, tfStoreName.Text, tfStoreAddress.Text);
             ListOfStores.Add(addNewStoreTemp);
         }
 
         private void btnFinishStoreAdding_Click(object sender, RoutedEventArgs e)
         {
+
             foreach (Store s in ListOfStores)
             {
                 string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
@@ -47,6 +49,7 @@ namespace TheShopGui
                     connection.Execute(insertIntoStores);
                 }
             }
+
         }
 
         private void btnAddNewInventoryItem_Click(object sender, RoutedEventArgs e)
