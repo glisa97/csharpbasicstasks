@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheShop
+namespace TheShopGui
 {
     public abstract class Item : IItem
     {
@@ -12,7 +12,7 @@ namespace TheShop
         public string Name { get; set; }
         public string UnitCost { get; set; }
 
-        public Item(int id, string name,string unitcost)
+        public Item(int id, string name, string unitcost)
         {
             Id = id;
             Name = name;
@@ -20,9 +20,9 @@ namespace TheShop
         }
         public Item(string name)
         {
-
+            
             Name = name;
-
+            
         }
 
     }

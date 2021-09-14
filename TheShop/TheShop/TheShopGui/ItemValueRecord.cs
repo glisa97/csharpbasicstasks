@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheShop
+namespace TheShopGui
 {
     public class ItemValueRecord : Item
     {
@@ -15,19 +15,19 @@ namespace TheShop
         {
 
         }
-        public ItemValueRecord(int id, string name,string unitCost, int quantity, string measure) :base(id, name,measure)
+        public ItemValueRecord(int id, string name, string unitCost, int quantity, string measure) : base(id, name, measure)
         {
-            
+
             UnitCost = unitCost;
             Quantity = quantity;
-            
+
 
         }
-        public ItemValueRecord(string name, int quantity) : base(name)
+        public ItemValueRecord(string name,int quantity) : base(name)
         {
             Name = name;
             Quantity = quantity;
-
+            
         }
 
     }

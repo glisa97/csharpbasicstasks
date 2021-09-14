@@ -86,14 +86,14 @@
                 Grid.Column="0"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
-                Width="120"/>
+                Width="120" Click="btnAddNewStore_Click"/>
         <Button Content="Finish store adding" 
                 Name ="btnFinishStoreAdding"
                 Grid.Row="7"
                 Grid.Column="1"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="center" 
-                Width="120"/>
+                Width="120" Click="btnFinishStoreAdding_Click"/>
 
         <DataGrid  Name="dgridStoresInCity"
                            AutoGenerateColumns="False"
@@ -189,7 +189,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
-                Width="140"/>
+                Width="140" Click="btnAddNewInventoryItem_Click"/>
 
 
         <Button Content="Finish inventoring" 
@@ -198,7 +198,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
-                Width="140"/>
+                Width="140" Click="btnFinishInventoring_Click"/>
 
     </Grid>
 </Window>

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TheShop;
-namespace TheShop
+
+namespace TheShopGui
 {
     public enum UnitOfMeasure
     {
@@ -12,5 +12,5 @@ namespace TheShop
         L,
         KG
     }
-    
+
 }

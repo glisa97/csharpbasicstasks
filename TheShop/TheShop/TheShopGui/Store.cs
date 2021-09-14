@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheShop
+namespace TheShopGui
 {
     class Store
     {
@@ -13,7 +13,7 @@ namespace TheShop
         public string Address { get; set; }
         public Inventory Inventory { get; set; }
 
-        public Store(string nameOfCity,string storeName,string address,Inventory inventory)
+        public Store(string nameOfCity, string storeName, string address, Inventory inventory)
         {
             NameOfCity = nameOfCity;
             StoreName = storeName;
@@ -25,7 +25,7 @@ namespace TheShop
             NameOfCity = nameOfCity;
             StoreName = storeName;
             Address = address;
-
+            
         }
     }
 }
