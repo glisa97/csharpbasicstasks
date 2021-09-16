@@ -24,10 +24,13 @@ namespace TheShopGui
     {
         List<Store> ListOfStores = new List<Store>();
         List<Inventory> ListOfInventories = new List<Inventory>();
+        
 
         public MainWindow()
         {
             InitializeComponent();
+
+            
         }
 
 
@@ -50,7 +53,26 @@ namespace TheShopGui
                 }
             }
 
+            Console.WriteLine("Enter name of city to search stores in database:");
+            string cityname = Console.ReadLine();
+
+
+            string connectionStringcity = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringcity))
+            {
+                string selectFromDatabase = $"SELECT nameofcity, storename, address FROM shop.stores WHERE nameofcity = '{cityname}'; ";
+                List<Store> stores = connection.Query<Store>(selectFromDatabase).AsList();
+                foreach (Store s in stores)
+                {
+                    Console.Write(s.NameOfCity + ",");
+                    Console.Write(s.StoreName + ",");
+                    Console.Write(s.Address + "\n");
+                    
+                }
+
+            }
         }
+       
 
         private void btnAddNewInventoryItem_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +92,28 @@ namespace TheShopGui
                     connection.Execute(insertIntoInventory);
                 }
             }
+
+            
+            string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringInv))
+            {
+                string selectFromDatabase = $"SELECT storename, productname, quantity FROM shop.inventory WHERE storename = '{}'; ";
+
+                List<Inventory> inventoryList = connection.Query<Inventory>(selectFromDatabase).AsList();
+                foreach (Inventory i in inventoryList)
+                {
+                    Console.Write(i.StoreName + ",");
+                    Console.Write(i.Name + ",");
+                    Console.Write(i.Quantity + "\n");
+                    textbox1.Text = "sdsd";
+                }
+
+            }
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

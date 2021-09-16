@@ -25,5 +25,10 @@ namespace TheShop
 
         }
 
+        public Item()
+        {
+
+
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace TheShopGui
 {
     public class ItemValueRecord : Item
     {
+
         public int Quantity { get; set; }
         public string Date { get; set; }
 
@@ -23,11 +24,17 @@ namespace TheShopGui
 
 
         }
-        public ItemValueRecord(string name,int quantity) : base(name)
+        public ItemValueRecord(string name, int quantity) : base(name)
         {
             Name = name;
             Quantity = quantity;
-            
+
+        }
+
+        public ItemValueRecord()
+        {
+
+
         }
 
     }

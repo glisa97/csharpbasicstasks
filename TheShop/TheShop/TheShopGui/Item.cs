@@ -20,10 +20,15 @@ namespace TheShopGui
         }
         public Item(string name)
         {
-            
+
             Name = name;
-            
+
         }
 
+        public Item()
+        {
+
+
+        }
     }
 }

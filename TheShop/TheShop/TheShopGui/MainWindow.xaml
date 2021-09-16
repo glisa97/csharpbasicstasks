@@ -199,6 +199,7 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Width="140" Click="btnFinishInventoring_Click"/>
+        <TextBox x:Name="textbox1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="17" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" Height="73" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
 
     </Grid>
 </Window>

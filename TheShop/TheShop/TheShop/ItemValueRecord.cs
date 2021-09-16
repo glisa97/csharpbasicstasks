@@ -8,6 +8,7 @@ namespace TheShop
 {
     public class ItemValueRecord : Item
     {
+        
         public int Quantity { get; set; }
         public string Date { get; set; }
 
@@ -27,6 +28,12 @@ namespace TheShop
         {
             Name = name;
             Quantity = quantity;
+
+        }
+
+        public ItemValueRecord() 
+        {
+            
 
         }
 
