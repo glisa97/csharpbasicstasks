@@ -97,15 +97,16 @@ namespace TheShopGui
             string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringInv))
             {
-                string selectFromDatabase = $"SELECT storename, productname, quantity FROM shop.inventory WHERE storename = '{}'; ";
+                string selectFromDatabase = $"SELECT storename, productname, quantity FROM shop.inventory WHERE storename = '{tfStoreName2.Text}'; ";
 
                 List<Inventory> inventoryList = connection.Query<Inventory>(selectFromDatabase).AsList();
                 foreach (Inventory i in inventoryList)
                 {
                     Console.Write(i.StoreName + ",");
-                    Console.Write(i.Name + ",");
+                    Console.Write(i.ProductName + ",");
                     Console.Write(i.Quantity + "\n");
-                    textbox1.Text = "sdsd";
+                    textbox1.Text = i.StoreName + "," + i.ProductName + "," + i.Quantity + "\n";
+                    
                 }
 
             }

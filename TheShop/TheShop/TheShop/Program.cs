@@ -116,7 +116,7 @@ namespace TheShop
                 foreach (Inventory i in inventoryList)
                 {
                     Console.Write(i.StoreName + ",");
-                    Console.Write(i.Name + ",");
+                    Console.Write(i.ProductName + ",");
                     Console.Write(i.Quantity + "\n");
                 }
 

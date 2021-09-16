@@ -11,6 +11,7 @@ namespace TheShop
         public string StoreName { get; set; }
       
         public ItemValueRecord ItemValueRecord { get; set; }
+        public string ProductName { get; set; }
 
         public Inventory(string storename, ItemValueRecord itemValueRecord)
         {
