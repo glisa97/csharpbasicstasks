@@ -104,11 +104,11 @@
                            Grid.Row="2"
 						   Grid.RowSpan="6"
                            Grid.Column="2"
-                           Grid.ColumnSpan="2">
+                           Grid.ColumnSpan="2" SelectionChanged="dgridStoresInCity_SelectionChanged">
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn   Header="Story name" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn   Header="Story name" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding StoreName}"/>
                 <DataGridTextColumn   Header="Story address" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Address}"/>
 
             </DataGrid.Columns>
