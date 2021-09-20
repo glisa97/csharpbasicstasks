@@ -23,11 +23,14 @@ namespace TheShopGui
     public partial class MainWindow : Window
     {
         List<Store> ListOfStores = new List<Store>();
+        
         List<Inventory> ListOfInventories = new List<Inventory>();
+        
         ObservableCollection<Store> storeList;
         ObservableCollection<Inventory> InventoryLList;
 
-
+        List<Store> storeslist = new List<Store>();
+        List<Inventory> invlist = new List<Inventory>();
 
         public MainWindow()
         {
@@ -62,7 +65,7 @@ namespace TheShopGui
                }
 
             
-            MessageBox.Show("Store successfully selected");
+            
             return inventories;
         }
 
@@ -83,20 +86,20 @@ namespace TheShopGui
                 }
 
             }
-            MessageBox.Show("Inventory successfully selected");
+            
             return stores;
         }
 
         public void btnAddNewStore_Click(object sender, RoutedEventArgs e)
         {
             Store addNewStoreTemp = new Store(tfCityName.Text, tfStoreName.Text, tfStoreAddress.Text);
-            storeList.Add(addNewStoreTemp);
+            storeslist.Add(addNewStoreTemp);
         }
 
         private void btnFinishStoreAdding_Click(object sender, RoutedEventArgs e)
         {
 
-            foreach (Store s in ListOfStores)
+            foreach (Store s in storeslist)
             {
                 string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -114,12 +117,12 @@ namespace TheShopGui
         {
             ItemValueRecord itemOfInventory = new ItemValueRecord(tfProductName.Text,Int32.Parse(tfQuantity.Text));
             Inventory inventory = new Inventory(tfStoreName2.Text, itemOfInventory);
-            ListOfInventories.Add(inventory); 
+            invlist.Add(inventory); 
         }
 
         private void btnFinishInventoring_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Inventory i in ListOfInventories)
+            foreach (Inventory i in invlist)
             {
                 string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
