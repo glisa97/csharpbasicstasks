@@ -12,3 +12,6 @@
 /TheShop/obj
 /TheShop/TheShop/TheShopGui/bin/Debug/net5.0-windows
 /TheShop/TheShop/TheShopGui/obj
+/TheShopWebServer/bin/Debug/net5.0
+/TheShopWebServer/obj/Debug/net5.0
+/TheShopWebServer/obj
