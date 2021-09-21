@@ -34,7 +34,7 @@ namespace TheShop
 
             foreach (Store s in ListOfStores)
             {
-                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     string insertIntoStores = $"INSERT INTO shop.stores(nameofcity, storename, address)VALUES('{s.NameOfCity}','{s.StoreName}','{s.Address}');";
@@ -62,7 +62,7 @@ namespace TheShop
 
             foreach (Inventory i in ListOfInventories)
             {
-                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity)VALUES('{i.StoreName}', '{i.ItemValueRecord.Name}','{i.ItemValueRecord.Quantity}'); ";

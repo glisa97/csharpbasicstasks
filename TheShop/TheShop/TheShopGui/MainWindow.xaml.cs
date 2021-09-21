@@ -47,7 +47,7 @@ namespace TheShopGui
         private List<Inventory> GetInventoriesFromDatabase(string v)
         {
             List<Inventory> inventories;
-            string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+            string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
             
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringInv))
             {
@@ -72,7 +72,7 @@ namespace TheShopGui
         private List<Store> GetStoresFromDatabase(string v)
         {
             List<Store> stores;
-            string connectionStringcity = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+            string connectionStringcity = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringcity))
             {
                 string selectFromDatabase = $"SELECT nameofcity, storename, address FROM shop.stores WHERE nameofcity = '{v}'; ";
@@ -101,7 +101,7 @@ namespace TheShopGui
 
             foreach (Store s in storeslist)
             {
-                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     string insertIntoStores = $"INSERT INTO shop.stores(nameofcity, storename, address)VALUES('{s.NameOfCity}','{s.StoreName}','{s.Address}');";
@@ -124,7 +124,7 @@ namespace TheShopGui
         {
             foreach (Inventory i in invlist)
             {
-                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
+                string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=postgres;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
                     string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity)VALUES('{i.StoreName}', '{i.ItemValueRecord.Name}','{i.ItemValueRecord.Quantity}'); ";
