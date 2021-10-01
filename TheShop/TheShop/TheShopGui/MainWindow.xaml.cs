@@ -35,8 +35,8 @@ namespace TheShopGui
         public MainWindow()
         {
             InitializeComponent();
-            ListOfStores = GetStoresFromDatabase("Beograd");
-            ListOfInventories = GetInventoriesFromDatabase("Maxi");
+            ListOfStores = GetStoresFromDatabase();
+            ListOfInventories = GetInventoriesFromDatabase();
             storeList = new ObservableCollection<Store>(ListOfStores);
             InventoryLList = new ObservableCollection<Inventory>(ListOfInventories);
             dgridStoresInCity.ItemsSource = storeList;
@@ -44,38 +44,37 @@ namespace TheShopGui
             
         }
 
-        private List<Inventory> GetInventoriesFromDatabase(string v)
+        private List<Inventory> GetInventoriesFromDatabase()
         {
             List<Inventory> inventories;
             string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringInv))
             {
-                string selectFromDatabase = $"SELECT storename, productname, quantity FROM shop.inventory WHERE storename = '{v}'; ";
+                string selectFromDatabase = $"SELECT storename, productname, quantity, date, unitcost FROM shop.inventory; ";
 
                 inventories = connection.Query<Inventory>(selectFromDatabase).AsList();
                 foreach (Inventory i in inventories)
                 {
                     Console.Write(i.StoreName + ",");
                     Console.Write(i.ProductName + ",");
-                    Console.Write(i.Quantity + "\n");
-                    //textbox1.Text += i.StoreName + "," + i.ProductName + "," + i.Quantity + "\n";
+                    Console.Write(i.Quantity + ",");
+                    Console.Write(i.Date + ",");
+                    Console.Write(i.UnitCost + "\n");
 
                 }
-               }
+            }
 
-            
-            
             return inventories;
         }
 
-        private List<Store> GetStoresFromDatabase(string v)
+        private List<Store> GetStoresFromDatabase()
         {
             List<Store> stores;
             string connectionStringcity = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringcity))
             {
-                string selectFromDatabase = $"SELECT nameofcity, storename, address FROM shop.stores WHERE nameofcity = '{v}'; ";
+                string selectFromDatabase = $"SELECT nameofcity, storename, address FROM shop.stores; ";
                 stores = connection.Query<Store>(selectFromDatabase).AsList();
                 foreach (Store s in stores)
                 {
@@ -115,8 +114,8 @@ namespace TheShopGui
 
         private void btnAddNewInventoryItem_Click(object sender, RoutedEventArgs e)
         {
-            ItemValueRecord itemOfInventory = new ItemValueRecord(tfProductName.Text,Int32.Parse(tfQuantity.Text));
-            Inventory inventory = new Inventory(tfStoreName2.Text, itemOfInventory);
+            
+            Inventory inventory = new Inventory(tfStoreName2.Text, tfProductName.Text, Int32.Parse(tfQuantity.Text), DateTime.Now,tfunitcost.Text);
             invlist.Add(inventory); 
         }
 
@@ -127,7 +126,7 @@ namespace TheShopGui
                 string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
-                    string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity)VALUES('{i.StoreName}', '{i.ItemValueRecord.Name}','{i.ItemValueRecord.Quantity}'); ";
+                    string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity, date, unitcost)VALUES('{i.StoreName}', '{i.ProductName}', '{i.Quantity}','{DateTime.Now}', '{i.UnitCost}');";
                     connection.Execute(insertIntoInventory);
                 }
             }
@@ -142,6 +141,11 @@ namespace TheShopGui
         }
 
         private void dgridStoresInCity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void tfunitcost_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

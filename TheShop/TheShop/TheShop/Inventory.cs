@@ -6,23 +6,26 @@ using System.Threading.Tasks;
 
 namespace TheShop
 {
-    class Inventory : ItemValueRecord
+    public class Inventory
     {
         public string StoreName { get; set; }
-      
-        public ItemValueRecord ItemValueRecord { get; set; }
         public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public DateTime? Date { get; set; }
+        public string UnitCost { get; set; }
 
-        public Inventory(string storename, ItemValueRecord itemValueRecord)
+
+        public Inventory(string storename, string productname, int quantity, DateTime date, string unitCost)
         {
             StoreName = storename;
-            ItemValueRecord = itemValueRecord;
-            
+            ProductName = productname;
+            Date = date;
+            UnitCost = unitCost;
         }
-       
+
         public Inventory()
         {
-            
+
 
         }
 

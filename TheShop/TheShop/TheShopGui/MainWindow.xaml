@@ -108,8 +108,9 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn   Header="Story name" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding StoreName}"/>
-                <DataGridTextColumn   Header="Story address" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Address}"/>
+                <DataGridTextColumn   Header="Name of city" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding NameOfCity}"/>
+                <DataGridTextColumn   Header="Store name" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding StoreName}"/>
+                <DataGridTextColumn   Header="Store address" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Address}"/>
 
             </DataGrid.Columns>
         </DataGrid>
@@ -179,6 +180,8 @@
                 <DataGridTextColumn   Header="Story name" Width="2*" FontSize="12" IsReadOnly="True" Binding="{Binding StoreName}"/>
                 <DataGridTextColumn   Header="Product name" Width="2*" FontSize="12" IsReadOnly="True" Binding="{Binding ProductName}"/>
                 <DataGridTextColumn   Header="Quantity" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn   Header="Date" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding Date}"/>
+                <DataGridTextColumn   Header="Unitcost" Width="*" FontSize="12" IsReadOnly="True" Binding="{Binding UnitCost}"/>
 
             </DataGrid.Columns>
         </DataGrid>
@@ -200,6 +203,18 @@
                 VerticalAlignment="Center" 
                 Width="140" Click="btnFinishInventoring_Click"/>
         <TextBox x:Name="textbox1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="17" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" Height="73" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
+        <Label Content="Unitcost:"
+            Grid.Row="14"
+            Grid.Column="0"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" Margin="131,0,0,0"/>
+        <TextBox x:Name="tfunitcost"
+            Text=""
+            Grid.Row="14"
+            Grid.Column="1"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Width="180" TextChanged="tfunitcost_TextChanged"/>
 
     </Grid>
 </Window>

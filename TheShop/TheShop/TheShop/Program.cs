@@ -54,10 +54,12 @@ namespace TheShop
             Console.WriteLine("Enter product name:");
             string productname = Console.ReadLine();
             Console.WriteLine("Enter quantity of product:");
-            string quantity = Console.ReadLine();
+            int quantity = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Enter unitcost of product:");
+            string unitcost = Console.ReadLine();
 
-            ItemValueRecord itemOfInventory = new ItemValueRecord(productname, Int32.Parse(quantity));
-            Inventory inventory = new Inventory(storename, itemOfInventory);
+            
+            Inventory inventory = new Inventory(storename,productname,quantity,DateTime.Now,unitcost);
             ListOfInventories.Add(inventory);
 
             foreach (Inventory i in ListOfInventories)
@@ -65,7 +67,7 @@ namespace TheShop
                 string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
-                    string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity)VALUES('{i.StoreName}', '{i.ItemValueRecord.Name}','{i.ItemValueRecord.Quantity}'); ";
+                    string insertIntoInventory = $"INSERT INTO shop.inventory(storename, productname, quantity, date, unitcost)VALUES('{storename}', '{productname}', '{quantity}','{DateTime.Now}', '{unitcost}');";
                     connection.Execute(insertIntoInventory);
                 }
             }
@@ -110,14 +112,16 @@ namespace TheShop
             string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringInv))
             {
-                string selectFromDatabase = $"SELECT storename, productname, quantity FROM shop.inventory WHERE storename = '{storenameForSearch}'; ";
+                string selectFromDatabase = $"SELECT storename, productname, quantity, date, unitcost FROM shop.inventory WHERE storename = '{storenameForSearch}'; ";
 
                 IEnumerable<Inventory> inventoryList = connection.Query<Inventory>(selectFromDatabase);
                 foreach (Inventory i in inventoryList)
                 {
                     Console.Write(i.StoreName + ",");
                     Console.Write(i.ProductName + ",");
-                    Console.Write(i.Quantity + "\n");
+                    Console.Write(i.Quantity + ",");
+                    Console.Write(i.Date + ",");
+                    Console.Write(i.UnitCost + "\n");
                 }
 
             }
