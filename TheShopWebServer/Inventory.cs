@@ -12,10 +12,10 @@ namespace TheShopWebServer
         public string ProductName { get; set; }
         public int Quantity { get; set; }
         public DateTime? Date { get; set; }
-        public string UnitCost { get; set; }
+        public int UnitCost { get; set; }
 
 
-        public Inventory(string storename, string productname,int quantity, DateTime date, string unitCost)
+        public Inventory(string storename, string productname,int quantity, DateTime date, int unitCost)
         {
             StoreName = storename;
             ProductName = productname;
