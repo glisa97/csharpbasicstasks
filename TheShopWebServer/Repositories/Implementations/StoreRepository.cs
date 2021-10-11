@@ -10,7 +10,7 @@ namespace TheShopWebServer.Repositories.Implementations
 {
     public class StoreRepository : IStoreRepository
     {
-        public void Get(string nameofcity) {
+        public List<Store> Select(string nameofcity) {
             List<Store> stores;
             string connectionStringcity = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringcity))
@@ -19,9 +19,10 @@ namespace TheShopWebServer.Repositories.Implementations
                 stores = connection.Query<Store>(selectFromDatabase).AsList();
 
             }
+            return stores;
             
         }
-        public void Post(string nameofcity, string storename, string address) {
+        public void Insert(string nameofcity, string storename, string address) {
             Store addNewStoreTemp = new Store(nameofcity, storename,address);
 
 
@@ -32,7 +33,7 @@ namespace TheShopWebServer.Repositories.Implementations
                 connection.Execute(insertIntoStores);
             }
         }
-        public void Put(string nameofcity, string storename, string address, string newaddress) {
+        public void Update(string nameofcity, string storename, string address, string newaddress) {
             string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {

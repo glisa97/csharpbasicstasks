@@ -17,19 +17,22 @@ namespace TheShopWebServer.Services.Implementations
         }
         public void Create(string storename, string productname, int quantity, int unitcost)
         {
-            this.inventoryRepository.Post(storename, productname, quantity, unitcost);
+            this.inventoryRepository.Insert(storename, productname, quantity, unitcost);
         }
-        public void Get(string nameofcity)
+        public List<Inventory> Get(string nameofcity)
         {
-            this.inventoryRepository.Get(nameofcity);
+           return this.inventoryRepository.Select(nameofcity);
+            
         }
-        public void Update(string storename, string productname, string newquantity)
+        public void Post(string storename, string productname, string newquantity)
         {
-            this.inventoryRepository.Put(storename, productname, newquantity);
+            this.inventoryRepository.Update(storename, productname, newquantity);
         }
         public void Delete(string storename, string article)
         {
             this.inventoryRepository.Delete(storename, article);
         }
+
+        
     }
 }

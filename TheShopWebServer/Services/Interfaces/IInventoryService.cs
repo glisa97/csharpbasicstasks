@@ -9,9 +9,9 @@ namespace TheShopWebServer.Services.Interfaces
     {
         void Create(string storename, string productname, int quantity, int unitcost);
 
-        void Get(string nameofcity);
+        List<Inventory> Get(string nameofcity);
 
-        void Update(string storename, string productname, string newquantity);
+        void Post(string storename, string productname, string newquantity);
 
         void Delete(string storename, string article);
         

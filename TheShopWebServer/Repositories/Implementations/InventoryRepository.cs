@@ -10,7 +10,7 @@ namespace TheShopWebServer.Repositories.Implementations
 {
     public class InventoryRepository : IInventoryRepository
     {
-        public void Get(string nameofcity)
+        public List<Inventory> Select(string nameofcity)
         {
             List<Inventory> inventories;
             string connectionStringInv = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
@@ -20,9 +20,10 @@ namespace TheShopWebServer.Repositories.Implementations
                 inventories = connection.Query<Inventory>(selectFromDatabase).AsList();
 
             }
+            return inventories;
 
         }
-        public void Post(string storename, string productname, int quantity, int unitcost)
+        public void Insert(string storename, string productname, int quantity, int unitcost)
         {
             Inventory inventory = new Inventory(storename, productname, quantity, DateTime.Now, unitcost);
 
@@ -33,7 +34,7 @@ namespace TheShopWebServer.Repositories.Implementations
                 connection.Execute(insertIntoInventory);
             }
         }
-        public void Put(string storename, string productname, string newquantity)
+        public void Update(string storename, string productname, string newquantity)
         {
             string connectionString = "Server=127.0.0.1;Port=5432;Database=shopDb;User Id=postgres;Password=admin;";
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))

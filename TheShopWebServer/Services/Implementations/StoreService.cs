@@ -16,13 +16,13 @@ namespace TheShopWebServer.Services.Implementations
             this.storeRepository = storeRepository;
         }
         public void Create(string nameofcity, string storename, string address) {
-            this.storeRepository.Post(nameofcity, storename, address);
+            this.storeRepository.Insert(nameofcity, storename, address);
         }
-        public void Get(string nameofcity) {
-            this.storeRepository.Get(nameofcity);
+        public List<Store> Get(string nameofcity) {
+            return this.storeRepository.Select(nameofcity);
         }
-        public void Update(string nameofcity, string storename, string address, string newaddress) {
-            this.storeRepository.Post(nameofcity,storename,address);
+        public void Post(string nameofcity, string storename, string address, string newaddress) {
+            this.storeRepository.Update(nameofcity,storename,address,address);
         }
         public void Delete(string storename) {
             this.storeRepository.Delete(storename);

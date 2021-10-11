@@ -8,8 +8,8 @@ namespace TheShopWebServer.Services.Interfaces
     public interface IStoreService
     {
         void Create(string nameofcity, string storename, string address);
-        void Get(string nameofcity);
-        void Update(string nameofcity, string storename, string address, string newaddress);
+        List<Store> Get(string nameofcity);
+        void Post(string nameofcity, string storename, string address, string newaddress);
         void Delete(string storename);
     }
 }
